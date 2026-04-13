@@ -3,14 +3,7 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "env": [
-    "DATABASE_URL",
-    "JWT_SECRET",
-    "NEXT_PUBLIC_APP_URL",
-    "CLOUDINARY_CLOUD_NAME",
-    "CLOUDINARY_UPLOAD_PRESET",
-    "STRIPE_SECRET_KEY"
-  ],
+
   "headers": [
     {
       "source": "/(.*)",
