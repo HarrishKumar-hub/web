@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "nodeVersion": "18.x",
+  "env": [
+    "DATABASE_URL",
+    "JWT_SECRET",
+    "NEXT_PUBLIC_APP_URL"
+  ]
+}

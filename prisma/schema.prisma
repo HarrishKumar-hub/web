@@ -1,0 +1,230 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  name      String
+  role      UserRole   @default(MEMBER)
+
+  profilePhotoUrl String?
+  bio             String?
+  phone           String?
+  address         String?
+  joinedDate      DateTime   @default(now())
+  verifiedEmail   Boolean    @default(false)
+  preferredLanguage String   @default("en")
+  isProfilePublic Boolean    @default(true)
+
+  // Relations
+  eventsCreated   Event[]
+  eventRsvps      EventRSVP[]
+  announcements   Announcement[]
+  comments        Comment[]
+  donations       Donation[]
+  mediaUploaded   MediaFile[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  GUEST
+  MEMBER
+  ADMIN
+}
+
+model Event {
+  id        String     @id @default(cuid())
+  title     String
+  titleTa   String     // Tamil translation
+  description String   @db.Text
+  descriptionTa String @db.Text // Tamil translation
+
+  date      DateTime
+  time      String?
+  location  String
+  imageUrl  String?
+  capacity  Int?
+  isPublic  Boolean    @default(true)
+
+  createdBy String
+  creator   User       @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+
+  rsvps     EventRSVP[]
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("events")
+}
+
+model EventRSVP {
+  id        String     @id @default(cuid())
+  eventId   String
+  event     Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  rsvpDate  DateTime   @default(now())
+
+  @@unique([eventId, userId])
+  @@map("event_rsvps")
+}
+
+model Announcement {
+  id        String     @id @default(cuid())
+  title     String
+  titleTa   String     // Tamil translation
+  content   String     @db.Text
+  contentTa String     @db.Text // Tamil translation
+
+  imageUrl  String?
+  isPublic  Boolean    @default(true)
+  allowComments Boolean @default(true)
+
+  createdBy String
+  creator   User       @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+
+  publishedDate DateTime @default(now())
+  isPinned      Boolean  @default(false)
+
+  comments  Comment[]
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("announcements")
+}
+
+model Comment {
+  id        String     @id @default(cuid())
+  content   String     @db.Text
+
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  announcementId String
+  announcement   Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+
+  isApproved Boolean    @default(false)
+
+  createdAt DateTime   @default(now())
+
+  @@map("comments")
+}
+
+model MediaFile {
+  id        String     @id @default(cuid())
+  title     String
+  titleTa   String?    // Tamil translation
+  type      MediaType
+
+  fileUrl   String
+  thumbnailUrl String?
+
+  description   String?   @db.Text
+  descriptionTa String?   @db.Text // Tamil translation
+
+  category  MediaCategory
+  isPublic  Boolean    @default(true)
+
+  uploadedBy String
+  uploader   User       @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
+
+  uploadedAt DateTime   @default(now())
+
+  @@map("media_files")
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum MediaCategory {
+  EVENT
+  CEREMONY
+  OTHER
+}
+
+model Donation {
+  id        String     @id @default(cuid())
+
+  userId    String?
+  user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  amount    Float
+  currency  String     @default("INR")
+
+  paymentMethod String  // stripe, razorpay, etc
+  transactionId String? @unique
+
+  status    DonationStatus @default(PENDING)
+
+  isRecurring Boolean   @default(false)
+  recurringFrequency String? // monthly, yearly, etc
+
+  donationDate DateTime  @default(now())
+  receiptUrl   String?
+
+  createdAt DateTime   @default(now())
+
+  @@map("donations")
+}
+
+enum DonationStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model TempleSettings {
+  id        String     @id @default(cuid())
+
+  templeName String
+  templeNameTa String // Tamil translation
+
+  description String?   @db.Text
+  descriptionTa String? @db.Text // Tamil translation
+
+  email     String?
+  phone     String?
+  address   String?
+
+  logoUrl   String?
+  bannerImageUrl String?
+
+  aboutContent String?   @db.Text
+  aboutContentTa String? @db.Text // Tamil translation
+
+  donationStripeKey String?
+
+  updatedAt DateTime   @updatedAt
+
+  @@map("temple_settings")
+}
+
+model Translation {
+  id        String     @id @default(cuid())
+  key       String     @unique
+
+  en        String     @db.Text
+  ta        String     @db.Text
+
+  @@map("translations")
+}
