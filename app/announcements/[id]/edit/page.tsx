@@ -46,7 +46,7 @@ export default function EditAnnouncementPage() {
     try {
       // Mocked update response logic for the demo 
       await new Promise(r => setTimeout(r, 1000))
-      router.push(\`/announcements/\${params.id}\`)
+      router.push(`/announcements/${params.id}`)
     } catch (err: any) {
       setError(err.message)
     } finally {
