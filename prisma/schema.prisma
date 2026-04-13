@@ -120,7 +120,7 @@ model Comment {
   announcementId String
   announcement   Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
 
-  isApproved Boolean    @default(false)
+  isApproved Boolean    @default(true)
 
   createdAt DateTime   @default(now())
 

@@ -10,8 +10,8 @@ export interface AuthenticatedRequest extends NextRequest {
   }
 }
 
-export function withAuth(handler: (req: AuthenticatedRequest) => Promise<NextResponse>) {
-  return async (req: NextRequest) => {
+export function withAuth(handler: (req: AuthenticatedRequest, ...args: any[]) => Promise<NextResponse>) {
+  return async (req: NextRequest, ...args: any[]) => {
     try {
       const token = extractTokenFromHeader(req.headers.get('authorization'))
 
@@ -34,7 +34,7 @@ export function withAuth(handler: (req: AuthenticatedRequest) => Promise<NextRes
       const authReq = req as AuthenticatedRequest
       authReq.user = payload
 
-      return handler(authReq)
+      return handler(authReq, ...args)
     } catch (error) {
       return NextResponse.json(
         { error: 'Internal server error' },
@@ -44,8 +44,8 @@ export function withAuth(handler: (req: AuthenticatedRequest) => Promise<NextRes
   }
 }
 
-export function withRole(roles: UserRole[], handler: (req: AuthenticatedRequest) => Promise<NextResponse>) {
-  return withAuth(async (req: AuthenticatedRequest) => {
+export function withRole(roles: UserRole[], handler: (req: AuthenticatedRequest, ...args: any[]) => Promise<NextResponse>) {
+  return withAuth(async (req: AuthenticatedRequest, ...args: any[]) => {
     if (!req.user || !roles.includes(req.user.role)) {
       return NextResponse.json(
         { error: 'Forbidden: Insufficient permissions' },
@@ -53,6 +53,6 @@ export function withRole(roles: UserRole[], handler: (req: AuthenticatedRequest)
       )
     }
 
-    return handler(req)
+    return handler(req, ...args)
   })
 }

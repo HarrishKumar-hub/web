@@ -1,12 +1,29 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "prisma generate && npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "nodeVersion": "18.x",
   "env": [
     "DATABASE_URL",
     "JWT_SECRET",
-    "NEXT_PUBLIC_APP_URL"
+    "NEXT_PUBLIC_APP_URL",
+    "CLOUDINARY_CLOUD_NAME",
+    "CLOUDINARY_UPLOAD_PRESET",
+    "STRIPE_SECRET_KEY"
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
   ]
 }

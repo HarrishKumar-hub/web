@@ -1,0 +1,34 @@
+name: Kovil Platform CI
+
+on:
+  push:
+    branches: [ "main", "production" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Run Linter Integration
+      run: npm run lint
+
+    - name: Construct Prisma Assets
+      run: npx prisma generate
+
+    - name: Static Build Validation
+      env:
+        DATABASE_URL: "postgresql://postgres:mock_db@localhost:5432/test"
+      run: npm run build

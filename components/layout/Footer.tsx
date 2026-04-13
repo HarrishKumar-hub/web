@@ -50,9 +50,14 @@ export default function Footer({ currentLanguage = 'en' }: FooterProps) {
           <div>
             <h4 className="font-bold mb-4">{currentLanguage === 'ta' ? 'தொடர்பு' : 'Contact'}</h4>
             <ul className="space-y-2 text-gray-400">
+              <li>
+                <Link href="/contact" className="hover:text-secondary inline-block mb-1 text-orange-400 font-bold border-b border-transparent hover:border-orange-400 transition-colors">
+                  {currentLanguage === 'ta' ? 'எங்களுக்கு ஒரு செய்தி அனுப்புங்கள்' : 'Send us a Message'}
+                </Link>
+              </li>
               <li>📧 contact@kovilcommunity.com</li>
               <li>📱 +1 (555) 000-0000</li>
-              <li>{currentLanguage === 'ta' ? 'உங்கள் நகரம்' : 'Your City, Country'}</li>
+              <li>{currentLanguage === 'ta' ? 'மதுரை, தமிழ்நாடு' : 'Madurai, Tamil Nadu'}</li>
             </ul>
           </div>
 

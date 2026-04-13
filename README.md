@@ -282,11 +282,11 @@ For issues or questions:
 ## Roadmap
 
 - [ ] Phase 1: Foundation ✅
-- [ ] Phase 2: Core Features
-- [ ] Phase 3: Admin Panel
-- [ ] Phase 4: Payment & Media
-- [ ] Phase 5: Polish & Extras
-- [ ] Phase 6: Launch & Maintenance
+- [ ] Phase 2: Core Features ✅
+- [ ] Phase 3: Admin Panel ✅
+- [ ] Phase 4: Payment & Media ✅
+- [ ] Phase 5: Polish & Extras ✅
+- [ ] Phase 6: Launch & Maintenance ✅
 
 ---
 

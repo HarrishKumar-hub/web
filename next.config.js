@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -12,12 +11,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.githubusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'ta'],
-  },
+  // Note: i18n is handled via custom translations system (lib/translations.ts)
+  // The built-in i18n config is not compatible with App Router
 };
 
 module.exports = nextConfig;
