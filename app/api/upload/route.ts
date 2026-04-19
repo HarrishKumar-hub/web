@@ -24,7 +24,7 @@ export const POST = withRole(['ADMIN'], async (req: AuthenticatedRequest) => {
       cloudinaryFormData.append('file', file)
       cloudinaryFormData.append('upload_preset', uploadPreset)
 
-      const cloudinaryRes = await fetch(\`https://api.cloudinary.com/v1_1/\${cloudName}/image/upload\`, {
+      const cloudinaryRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
         body: cloudinaryFormData,
       })

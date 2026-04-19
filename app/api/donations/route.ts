@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
           },
         ],
         mode: isRecurring ? 'subscription' : 'payment',
-        success_url: \`\${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/donations?success=true\`,
-        cancel_url: \`\${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/donations?canceled=true\`,
+        success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/donations?success=true`,
+        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/donations?canceled=true`,
         metadata: {
           userId: userId || 'anonymous',
           type: 'DONATION'

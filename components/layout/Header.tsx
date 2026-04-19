@@ -1,20 +1,37 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/useAuth'
 import { useState } from 'react'
 import { t, type Language } from '@/lib/translations'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { Flame, Menu, X } from 'lucide-react'
 
 interface HeaderProps {
   currentLanguage?: Language
   onLanguageChange?: (lang: Language) => void
 }
 
+const NAV_ITEMS = [
+  { name: 'nav.home',   href: '/' },
+  { name: 'nav.about',  href: '/about' },
+  { name: 'nav.events', href: '/events' },
+  { name: 'nav.news',   href: '/announcements' },
+  { name: 'nav.gallery',href: '/gallery' },
+  { name: 'nav.booking',href: '/booking' },
+]
+
 export default function Header({ currentLanguage = 'en', onLanguageChange }: HeaderProps) {
   const { user, isAuthenticated, logout } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const router = useRouter()
+
+  const { scrollY } = useScroll()
+  const headerHeight  = useTransform(scrollY, [0, 100], ['116px', '72px'])
+  const headerBg      = useTransform(scrollY, [0, 80],  ['rgba(250,247,240,0)', 'rgba(250,247,240,0.97)'])
+  const headerShadow  = useTransform(scrollY, [0, 80],  ['0 0 0 rgba(0,0,0,0)', '0 4px 24px rgba(61,43,31,0.08)'])
+  const logoScale     = useTransform(scrollY, [0, 100], [1, 0.85])
 
   const handleLogout = async () => {
     await logout()
@@ -22,170 +39,139 @@ export default function Header({ currentLanguage = 'en', onLanguageChange }: Hea
   }
 
   return (
-    <header className="bg-gradient-to-r from-red-800 to-red-900 text-white shadow-lg sticky top-0 z-40">
-      <div className="container-custom py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link href="/" className="text-2xl font-bold flex items-center gap-2 hover:opacity-90 transition-opacity">
-          <span className="text-3xl">🕉️</span>
-          <span className="hidden sm:inline">Kovil</span>
-        </Link>
+    <>
+      <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-saffron-glow" />
 
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
-          <Link href="/" className="px-3 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
-            {t('nav.home', currentLanguage)}
+      <motion.header
+        style={{ height: headerHeight, backgroundColor: headerBg, boxShadow: headerShadow }}
+        className="fixed top-1 left-0 right-0 z-50 backdrop-blur-xl transition-colors duration-500 flex items-center border-b border-gold/20"
+      >
+        {/* Ornamental Bottom Border */}
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+        
+        <div className="w-full px-4 md:px-10 lg:px-16 flex justify-between items-center relative">
+
+          {/* Logo & Brand */}
+          <Link href="/" className="flex items-center gap-5 hover:opacity-90 transition-opacity group">
+            <motion.div
+              style={{ scale: logoScale }}
+              whileHover={{ scale: 1.06 }}
+              className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-gold/25 overflow-hidden bg-white shadow-golden flex-shrink-0"
+            >
+              <img src="/logo.png" alt="Sri Karuppusamy Thirukovil" className="w-full h-full object-cover" />
+            </motion.div>
+            <div className="flex flex-col justify-center gap-1">
+              <h1 className="text-base md:text-xl lg:text-2xl font-serif font-bold tracking-tight text-gold-dark leading-none group-hover:text-gold transition-colors whitespace-nowrap">
+                Sri Karuppusamy Thirukovil
+              </h1>
+              <p className="text-[8px] md:text-[9px] tracking-[0.45em] font-sans font-black text-saffron/60 uppercase whitespace-nowrap">
+                Mathanaickenpatti Sanctuary
+              </p>
+            </div>
           </Link>
-          <Link href="/about" className="px-3 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
-            {t('nav.about', currentLanguage)}
-          </Link>
-          <Link href="/events" className="px-3 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
-            {t('nav.events', currentLanguage)}
-          </Link>
-          <Link href="/announcements" className="px-3 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
-            {t('nav.news', currentLanguage)}
-          </Link>
-          <Link href="/gallery" className="px-3 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
-            {t('nav.gallery', currentLanguage)}
-          </Link>
-          <Link href="/donations" className="px-4 py-2 ml-2 bg-yellow-400 text-orange-900 rounded-lg font-bold text-sm hover:bg-yellow-300 transition-colors shadow-sm">
-            {currentLanguage === 'ta' ? 'நன்கொடை' : 'Donate'}
-          </Link>
-          {isAuthenticated && (
-            <>
-              <Link href="/members" className="px-3 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
-                {t('nav.members', currentLanguage)}
+
+          {/* Desktop Nav */}
+          <div className="flex items-center gap-6">
+            <nav className="hidden xl:flex items-center gap-1">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="px-4 py-2.5 font-sans font-bold text-[11px] uppercase tracking-[0.25em] text-sacred-ash/70 hover:text-saffron transition-all relative group rounded-lg hover:bg-saffron/5"
+                >
+                  {t(item.name, currentLanguage)}
+                  <span className="absolute bottom-1 left-4 right-4 h-0.5 bg-saffron scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left rounded-full" />
+                </Link>
+              ))}
+              <Link href="/donations" className="ml-4 btn-sacred py-3 px-8 text-[10px]">
+                {currentLanguage === 'ta' ? 'நன்கொடை' : 'Offer Devotion'}
               </Link>
-            </>
-          )}
-        </nav>
+            </nav>
 
-        {/* Auth & Language */}
-        <div className="flex items-center gap-3">
-          {/* Language Switcher */}
-          <div className="flex bg-white/10 rounded-lg p-0.5">
+            {/* Language Toggle */}
+            <div className="flex bg-ivory-warm rounded-full p-0.5 border border-gold/15 shadow-ivory">
+              {(['en', 'ta'] as Language[]).map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => onLanguageChange?.(lang)}
+                  className={`px-3.5 py-1.5 text-[10px] font-black rounded-full transition-all duration-300 ${
+                    currentLanguage === lang
+                      ? 'bg-maroon text-ivory shadow-temple'
+                      : 'text-sacred-smoke hover:text-gold-dark'
+                  }`}
+                >
+                  {lang === 'en' ? 'EN' : 'தமிழ்'}
+                </button>
+              ))}
+            </div>
+
+            {/* Auth */}
+            {isAuthenticated ? (
+              <div className="hidden md:flex items-center gap-3">
+                <Link
+                  href="/profile"
+                  className="w-10 h-10 rounded-full border-2 border-gold/25 flex items-center justify-center hover:border-saffron transition-all bg-ivory-warm overflow-hidden shadow-ivory"
+                >
+                  <span className="text-xs font-black text-gold-dark">{user?.name?.[0].toUpperCase()}</span>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-sacred-smoke/50 hover:text-red-500 font-sans font-black text-[10px] uppercase tracking-widest transition-colors"
+                >
+                  {t('nav.logout', currentLanguage)}
+                </button>
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center">
+                <Link
+                  href="/login"
+                  className="font-sans font-black text-[11px] uppercase tracking-[0.25em] text-sacred-ash/60 hover:text-saffron transition-colors px-4 py-2"
+                >
+                  {t('nav.login', currentLanguage)}
+                </Link>
+              </div>
+            )}
+
+            {/* Mobile Hamburger */}
             <button
-              onClick={() => onLanguageChange?.('en')}
-              className={`px-2.5 py-1.5 text-xs font-bold rounded-md transition-all ${
-                currentLanguage === 'en' ? 'bg-white text-red-800' : 'text-white/80 hover:text-white'
-              }`}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="xl:hidden w-11 h-11 flex items-center justify-center rounded-full bg-ivory-warm text-gold-dark transition-all active:scale-90 border border-gold/15 hover:border-saffron/40 hover:text-saffron"
             >
-              EN
-            </button>
-            <button
-              onClick={() => onLanguageChange?.('ta')}
-              className={`px-2.5 py-1.5 text-xs font-bold rounded-md transition-all ${
-                currentLanguage === 'ta' ? 'bg-white text-red-800' : 'text-white/80 hover:text-white'
-              }`}
-            >
-              தமிழ்
+              {isMenuOpen ? <X className="w-5 h-5 stroke-[2.5]" /> : <Menu className="w-5 h-5 stroke-[2.5]" />}
             </button>
           </div>
-
-          {/* Auth Links */}
-          {isAuthenticated ? (
-            <div className="hidden md:flex items-center gap-2">
-              <Link href="/profile" className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors">
-                <span className="text-sm font-medium">{user?.name?.split(' ')[0]}</span>
-              </Link>
-              {user?.role === 'ADMIN' && (
-                <Link href="/admin" className="px-3 py-1.5 bg-yellow-400 text-orange-900 rounded-lg font-bold text-sm hover:bg-yellow-300 transition-colors shadow-sm">
-                  Admin
-                </Link>
-              )}
-              <button
-                onClick={handleLogout}
-                className="px-3 py-1.5 bg-white/15 rounded-lg text-sm font-medium hover:bg-white/25 transition-colors"
-              >
-                {t('nav.logout', currentLanguage)}
-              </button>
-            </div>
-          ) : (
-            <div className="hidden md:flex items-center gap-2">
-              <Link href="/login" className="px-3 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium text-sm">
-                {t('nav.login', currentLanguage)}
-              </Link>
-              <Link href="/register" className="px-4 py-2 bg-yellow-400 text-orange-900 rounded-lg font-bold text-sm hover:bg-yellow-300 transition-colors shadow-sm">
-                {t('auth.signUp', currentLanguage)}
-              </Link>
-            </div>
-          )}
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors"
-          >
-            <span className="text-xl">{isMenuOpen ? '✕' : '☰'}</span>
-          </button>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <nav className="md:hidden bg-red-900/95 backdrop-blur-sm px-4 py-4 space-y-1 border-t border-white/10 animate-in">
-          <Link href="/" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-            {t('nav.home', currentLanguage)}
-          </Link>
-          <Link href="/about" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-            {t('nav.about', currentLanguage)}
-          </Link>
-          <Link href="/events" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-            {t('nav.events', currentLanguage)}
-          </Link>
-          <Link href="/announcements" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-            {t('nav.news', currentLanguage)}
-          </Link>
-          <Link href="/gallery" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-            {t('nav.gallery', currentLanguage)}
-          </Link>
-          <Link href="/donations" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg bg-yellow-400 text-orange-900 font-bold transition-colors">
-            {currentLanguage === 'ta' ? 'நன்கொடை' : 'Donate'}
-          </Link>
-          {isAuthenticated && (
-            <>
-              <Link href="/members" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-                {t('nav.members', currentLanguage)}
-              </Link>
-              <Link href="/profile" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-                {t('nav.profile', currentLanguage)}
-              </Link>
-              {user?.role === 'ADMIN' && (
-                <Link href="/admin" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg bg-yellow-400/20 text-yellow-200 font-medium transition-colors">
-                  Admin Dashboard
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.nav
+              initial={{ opacity: 0, y: -12, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.97 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="fixed inset-x-4 top-[80px] bg-ivory/98 backdrop-blur-3xl border border-gold/15 px-8 py-10 flex flex-col gap-6 shadow-golden-lg rounded-[32px] xl:hidden z-40"
+            >
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-2xl font-serif font-bold text-gold-dark hover:text-saffron transition-colors border-b border-gold/10 pb-4 last:border-0"
+                >
+                  {t(item.name, currentLanguage)}
                 </Link>
-              )}
-              <button onClick={handleLogout} className="block w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors text-red-200">
-                {t('nav.logout', currentLanguage)}
-              </button>
-            </>
+              ))}
+              <div className="pt-4">
+                <Link href="/donations" onClick={() => setIsMenuOpen(false)} className="btn-sacred flex items-center justify-center gap-2 w-full py-5 text-base">
+                  <Flame className="w-5 h-5" />
+                  {currentLanguage === 'ta' ? 'நன்கொடை சமர்ப்பிக்கவும்' : 'Offer Devotion'}
+                </Link>
+              </div>
+            </motion.nav>
           )}
-          {!isAuthenticated && (
-            <div className="pt-2 border-t border-white/10 mt-2 space-y-1">
-              <Link href="/login" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg hover:bg-white/10 font-medium transition-colors">
-                {t('nav.login', currentLanguage)}
-              </Link>
-              <Link href="/register" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg bg-yellow-400 text-orange-900 font-bold text-center transition-colors">
-                {t('auth.signUp', currentLanguage)}
-              </Link>
-            </div>
-          )}
-          {/* Mobile Search */}
-          <form 
-            onSubmit={(e) => { e.preventDefault(); router.push(`/search?q=${encodeURIComponent(searchQuery)}`); setIsMenuOpen(false); }} 
-            className="px-4 pb-4 pt-2"
-          >
-            <div className="relative">
-              <input
-                type="text"
-                placeholder={currentLanguage === 'ta' ? 'தேடு...' : 'Search events, items...'}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 text-white placeholder:text-white/60 border border-white/20 rounded-xl text-md focus:outline-none focus:ring-2 focus:ring-white/50"
-              />
-            </div>
-          </form>
-        </nav>
-      )}
-    </header>
+        </AnimatePresence>
+      </motion.header>
+    </>
   )
 }

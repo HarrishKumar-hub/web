@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer'
 import { Language, t } from '@/lib/translations'
 import { useAuth } from '@/lib/useAuth'
 import RsvpButton from '@/components/events/RsvpButton'
+import { Calendar, MapPin, Users, Ticket, PenLine } from 'lucide-react'
 
 // Same mock data as events listing page
 const MOCK_EVENTS: Record<string, any> = {
@@ -15,11 +16,11 @@ const MOCK_EVENTS: Record<string, any> = {
     id: '1',
     title: 'Aadi Amavasai Ceremony',
     titleTa: 'ஆடி அமாவாசை பூஜை',
-    description: 'Join us for the sacred Aadi Amavasai ceremony at Sri Ayyanar Karuppasamy Kovil, Mathanaickenpatti. This important ritual honors our ancestors and seeks blessings for the community.\n\nSchedule:\n• 6:00 AM - Suprabhatam and morning prayers\n• 7:00 AM - Special Abhishekam with sacred items\n• 8:30 AM - Alankaram and deeparadhana\n• 10:00 AM - Homam (sacred fire ritual)\n• 11:30 AM - Mahaprasadam distribution\n\nAll devotees are welcome. Prasadam will be distributed to all attendees. Please arrive early for parking arrangements.',
+    description: 'Join us for the sacred Aadi Amavasai ceremony at Sri Karuppusamy Thirukovil, Mathanaickenpatti. This important ritual honors our ancestors and seeks blessings for the community.\n\nSchedule:\n• 6:00 AM - Suprabhatam and morning prayers\n• 7:00 AM - Special Abhishekam with sacred items\n• 8:30 AM - Alankaram and deeparadhana\n• 10:00 AM - Homam (sacred fire ritual)\n• 11:30 AM - Mahaprasadam distribution\n\nAll devotees are welcome. Prasadam will be distributed to all attendees. Please arrive early for parking arrangements.',
     descriptionTa: 'ஸ்ரீ அய்யனார் கருப்பசாமி கோவிலில் புனித ஆடி அமாவாசை விழாவில் எங்களுடன் இணையுங்கள். இந்த முக்கியமான சடங்கு நமது முன்னோர்களை கௌரவிக்கிறது மற்றும் சமூகத்திற்கு ஆசீர்வாதங்களை நாடுகிறது.',
     date: '2026-08-11T06:00:00.000Z',
     time: '6:00 AM - 12:00 PM',
-    location: 'Sri Ayyanar Karuppasamy Kovil, Mathanaickenpatti',
+    location: 'Sri Karuppusamy Thirukovil, Mathanaickenpatti',
     imageUrl: 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1d?auto=format&fit=crop&q=80&w=1200',
     capacity: 200,
     creator: { name: 'Rajesh Kumar', profilePhotoUrl: null },
@@ -101,18 +102,18 @@ export default function EventDetailPage() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="min-h-screen bg-ivory py-12">
         <div className="container-custom max-w-4xl">
           {/* Breadcrumb */}
-          <div className="mb-6 text-sm text-gray-500">
-            <Link href="/events" className="hover:text-primary transition-colors">
+          <div className="mb-6 text-sm text-sacred-ash/50 font-sans font-semibold">
+            <Link href="/events" className="hover:text-saffron transition-colors">
               {t('event.title', language)}
             </Link>
             <span className="mx-2">→</span>
-            <span className="text-gray-700">{displayTitle}</span>
+            <span className="text-sacred-ash">{displayTitle}</span>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="card-temple p-0 overflow-hidden border-none shadow-golden-lg">
             {event.imageUrl && (
               <img src={event.imageUrl} alt={displayTitle} className="w-full h-80 object-cover" />
             )}
@@ -120,29 +121,29 @@ export default function EventDetailPage() {
             <div className="p-8">
               <h1 className="text-4xl font-bold mb-6">{displayTitle}</h1>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-gray-50 p-6 rounded-xl">
-                <div className="flex items-center gap-3 text-gray-700">
-                  <span className="text-2xl">📅</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-ivory-warm p-6 rounded-2xl border border-gold/10">
+                <div className="flex items-center gap-3 text-sacred-ash/70">
+                  <Calendar className="w-5 h-5 text-saffron flex-shrink-0" />
                   <div>
                     <p className="font-bold">{displayDate}</p>
                     {event.time && <p className="text-sm text-gray-500">{event.time}</p>}
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-gray-700">
-                  <span className="text-2xl">📍</span>
+                <div className="flex items-center gap-3 text-sacred-ash/70">
+                  <MapPin className="w-5 h-5 text-saffron flex-shrink-0" />
                   <div>
                     <p className="font-bold">{event.location}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-gray-700">
-                  <span className="text-2xl">👥</span>
+                <div className="flex items-center gap-3 text-sacred-ash/70">
+                  <Users className="w-5 h-5 text-saffron flex-shrink-0" />
                   <div>
                     <p className="font-bold">{event._count?.rsvps || 0} {language === 'ta' ? 'பேர் கலந்துகொள்கின்றனர்' : 'attending'}</p>
                   </div>
                 </div>
                 {event.capacity && (
-                  <div className="flex items-center gap-3 text-gray-700">
-                    <span className="text-2xl">🎫</span>
+                  <div className="flex items-center gap-3 text-sacred-ash/70">
+                    <Ticket className="w-5 h-5 text-saffron flex-shrink-0" />
                     <div>
                       <p className="font-bold">{event.capacity} {language === 'ta' ? 'அதிகபட்ச இடம்' : 'capacity'}</p>
                     </div>
@@ -150,13 +151,13 @@ export default function EventDetailPage() {
                 )}
               </div>
 
-              <div className="prose max-w-none mb-8 whitespace-pre-wrap text-lg leading-relaxed text-gray-700">
+              <div className="prose-temple max-w-none mb-8 whitespace-pre-wrap text-lg leading-relaxed">
                 {displayDescription}
               </div>
 
-              <div className="border-t pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div className="text-gray-600 flex items-center gap-2">
-                  <span>✍️</span> {language === 'ta' ? 'உருவாக்கியவர்' : 'Created by'} <span className="font-bold">{event.creator?.name || 'Admin'}</span>
+              <div className="border-t border-gold/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="text-sacred-ash/50 flex items-center gap-2 text-sm font-sans">
+                  <PenLine className="w-4 h-4" /> {language === 'ta' ? 'உருவாக்கியவர்' : 'Created by'} <span className="font-bold text-sacred-ash">{event.creator?.name || 'Admin'}</span>
                 </div>
                 <div className="flex gap-4">
                   {user && (user.role === 'ADMIN' || user.id === event.createdBy) && (

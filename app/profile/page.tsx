@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { Language, t } from '@/lib/translations'
 import { useAuth } from '@/lib/useAuth'
+import { UserCircle, Mail, Shield, Camera, Save, X, Globe } from 'lucide-react'
 
 export default function ProfilePage() {
   const [language, setLanguage] = useState<Language>('en')
@@ -109,27 +110,40 @@ export default function ProfilePage() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="min-h-screen bg-ivory py-16">
         <div className="container-custom max-w-2xl">
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+          <div className="card-temple p-10 md:p-14 border-none shadow-golden-lg">
             {/* Profile Header */}
-            <div className="text-center mb-8 pb-6 border-b border-gray-100">
-              <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 bg-orange-50 border-4 border-orange-100 flex items-center justify-center">
-                {formData.profilePhotoUrl ? (
-                  <img src={formData.profilePhotoUrl} alt="Profile" className="w-full h-full object-cover" />
-                ) : (
-                  <span className="text-4xl">👤</span>
-                )}
+            <div className="text-center mb-12 pb-8 border-b border-gold/10">
+              <div className="relative inline-block group mb-6">
+                <div className="w-32 h-32 rounded-full overflow-hidden mx-auto bg-ivory-warm border-4 border-gold p-1 shadow-golden">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-ivory flex items-center justify-center">
+                    {formData.profilePhotoUrl ? (
+                      <img src={formData.profilePhotoUrl} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <UserCircle className="w-16 h-16 text-gold/40" strokeWidth={1} />
+                    )}
+                  </div>
+                </div>
+                <div className="absolute bottom-1 right-1 bg-ivory text-saffron p-2.5 rounded-full border border-gold/20 shadow-flame/10 cursor-pointer active:scale-95 transition-all">
+                  <Camera className="w-5 h-5" />
+                </div>
               </div>
-              <h1 className="text-3xl font-bold text-dark">
+              <h1 className="text-4xl font-serif font-bold text-gold-dark mb-2 tracking-tight">
                 {t('nav.profile', language)}
               </h1>
-              <p className="text-gray-500 mt-1">{user?.email}</p>
-              <span className={`inline-block mt-2 text-xs px-3 py-1 rounded-full font-medium ${
-                user?.role === 'ADMIN' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
-              }`}>
-                {user?.role === 'ADMIN' ? (language === 'ta' ? 'நிர்வாகி' : 'Admin') : (language === 'ta' ? 'உறுப்பினர்' : 'Member')}
-              </span>
+              <div className="flex items-center justify-center gap-2 text-sacred-ash/60 mb-4">
+                <Mail className="w-4 h-4 text-saffron/50" />
+                <span className="font-medium text-sm">{user?.email}</span>
+              </div>
+              <div className="flex justify-center">
+                <span className={`badge-sacred flex items-center gap-1.5 ${
+                  user?.role === 'ADMIN' ? 'bg-maroon/5 text-maroon border-maroon/20' : 'bg-saffron/5 text-saffron border-saffron/20'
+                }`}>
+                  <Shield className="w-3 h-3" />
+                  {user?.role === 'ADMIN' ? (language === 'ta' ? 'நிர்வாகி' : 'Admin') : (language === 'ta' ? 'உறுப்பினர்' : 'Member')}
+                </span>
+              </div>
             </div>
             
             {message.text && (
@@ -138,25 +152,25 @@ export default function ProfilePage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">{t('auth.name', language)} *</label>
-                <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all" />
+                <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">{t('auth.name', language)} *</label>
+                <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="input-temple" />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">{language === 'ta' ? 'சுயவிவரம்' : 'Bio'}</label>
-                <textarea rows={3} value={formData.bio} onChange={e => setFormData({...formData, bio: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all max-h-32" placeholder={language === 'ta' ? 'உங்களைப் பற்றி...' : 'Tell us about yourself...'} />
+                <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">{language === 'ta' ? 'சுயவிவரம்' : 'Bio'}</label>
+                <textarea rows={3} value={formData.bio} onChange={e => setFormData({...formData, bio: e.target.value})} className="input-temple max-h-32" placeholder={language === 'ta' ? 'உங்களைப் பற்றி...' : 'Tell us about yourself...'} />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">{language === 'ta' ? 'தொலைபேசி' : 'Phone'}</label>
-                  <input type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all" />
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">{language === 'ta' ? 'தொலைபேசி' : 'Phone'}</label>
+                  <input type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="input-temple" />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">{language === 'ta' ? 'விருப்பமான மொழி' : 'Preferred Language'}</label>
-                  <select value={formData.preferredLanguage} onChange={e => setFormData({...formData, preferredLanguage: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all">
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">{language === 'ta' ? 'விருப்பமான மொழி' : 'Preferred Language'}</label>
+                  <select value={formData.preferredLanguage} onChange={e => setFormData({...formData, preferredLanguage: e.target.value})} className="input-temple appearance-none bg-no-repeat bg-[right_1rem_center]">
                     <option value="en">English</option>
                     <option value="ta">Tamil (தமிழ்)</option>
                   </select>
@@ -164,33 +178,43 @@ export default function ProfilePage() {
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">{language === 'ta' ? 'முகவரி' : 'Address'}</label>
-                <textarea rows={2} value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all" />
+                <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">{language === 'ta' ? 'முகவரி' : 'Address'}</label>
+                <textarea rows={2} value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="input-temple" />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">{language === 'ta' ? 'சுயவிவர புகைப்பட URL' : 'Profile Photo URL'}</label>
-                <input type="url" value={formData.profilePhotoUrl} onChange={e => setFormData({...formData, profilePhotoUrl: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all" placeholder="https://..." />
+                <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">{language === 'ta' ? 'சுயவிவர புகைப்பட URL' : 'Profile Photo URL'}</label>
+                <input type="url" value={formData.profilePhotoUrl} onChange={e => setFormData({...formData, profilePhotoUrl: e.target.value})} className="input-temple" placeholder="https://..." />
                 {formData.profilePhotoUrl && (
-                  <div className="mt-4">
-                    <p className="text-xs text-gray-500 mb-2">{language === 'ta' ? 'முன்னோட்டம்:' : 'Preview:'}</p>
-                    <img src={formData.profilePhotoUrl} alt="Profile" className="w-20 h-20 rounded-full object-cover border-2 border-orange-200" />
+                  <div className="mt-6 flex items-center gap-4 p-4 bg-ivory-warm rounded-2xl border border-gold/10 shadow-ivory">
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-ivory border-2 border-gold shadow-golden">
+                      <img src={formData.profilePhotoUrl} alt="Preview" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-gold">{language === 'ta' ? 'முன்னோட்டம்' : 'Image Preview'}</p>
+                      <p className="text-xs text-sacred-ash/50">Changes visible in directory</p>
+                    </div>
                   </div>
                 )}
               </div>
 
-              <div className="flex items-center pt-2 bg-gray-50 p-4 rounded-xl">
-                <input type="checkbox" checked={formData.isProfilePublic} onChange={e => setFormData({...formData, isProfilePublic: e.target.checked})} className="mr-3 w-4 h-4 accent-orange-600" id="publicProfile" />
-                <label htmlFor="publicProfile" className="text-sm font-medium text-gray-700">
+              <div className="flex items-center pt-2 bg-ivory-warm p-5 rounded-2xl border border-gold/10 border-dashed">
+                <div className="relative flex items-center h-5">
+                  <input type="checkbox" checked={formData.isProfilePublic} onChange={e => setFormData({...formData, isProfilePublic: e.target.checked})} className="w-5 h-5 accent-saffron bg-ivory border-gold/30 rounded focus:ring-saffron/20 transition-all cursor-pointer" id="publicProfile" />
+                </div>
+                <label htmlFor="publicProfile" className="ml-4 text-sm font-medium text-sacred-ash/70 cursor-pointer flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-saffron/40" />
                   {language === 'ta' ? 'என் சுயவிவரத்தை உறுப்பினர் அட்டவணையில் காண்பி' : 'Make my profile visible in the Member Directory'}
                 </label>
               </div>
 
-              <div className="pt-6 border-t flex justify-end gap-4">
-                <button type="button" onClick={() => router.back()} className="px-6 py-3 border border-gray-300 rounded-xl hover:bg-gray-50 font-medium transition-all">
+              <div className="pt-10 border-t border-gold/10 flex flex-col sm:flex-row justify-end gap-5">
+                <button type="button" onClick={() => router.back()} className="btn-outline-gold px-10 flex items-center justify-center gap-2">
+                  <X className="w-4 h-4" />
                   {t('common.cancel', language)}
                 </button>
-                <button type="submit" disabled={isSubmitting} className="px-8 py-3 bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-xl font-bold shadow-lg hover:shadow-orange-200 hover:-translate-y-0.5 transition-all disabled:opacity-50">
+                <button type="submit" disabled={isSubmitting} className="btn-sacred px-14 flex items-center justify-center gap-2">
+                  <Save className="w-4 h-4" />
                   {isSubmitting ? t('common.loading', language) : t('common.save', language)}
                 </button>
               </div>

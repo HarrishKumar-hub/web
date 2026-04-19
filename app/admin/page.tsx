@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer'
 import { Language, t } from '@/lib/translations'
 import Link from 'next/link'
 import { useAuth } from '@/lib/useAuth'
+import { Users, Calendar, Megaphone, Image, Building2, BarChart3 } from 'lucide-react'
 
 export default function AdminDashboard() {
   const [language, setLanguage] = useState<Language>('en')
@@ -13,10 +14,10 @@ export default function AdminDashboard() {
   
   // Mock Stats
   const stats = [
-    { label: language === 'ta' ? 'மொத்த உறுப்பினர்கள்' : 'Total Members', value: '15', icon: '👥', color: 'bg-blue-50 text-blue-700' },
-    { label: language === 'ta' ? 'வரவிருக்கும் நிகழ்வுகள்' : 'Upcoming Events', value: '4', icon: '🗓️', color: 'bg-orange-50 text-orange-700' },
-    { label: language === 'ta' ? 'அறிவிப்புகள்' : 'Announcements', value: '8', icon: '📢', color: 'bg-green-50 text-green-700' },
-    { label: language === 'ta' ? 'கேலரி படங்கள்' : 'Gallery Photos', value: '24', icon: '📸', color: 'bg-purple-50 text-purple-700' },
+    { label: language === 'ta' ? 'மொத்த உறுப்பினர்கள்' : 'Total Members', value: '15', icon: <Users className="w-6 h-6" />, color: 'bg-blue-50 text-blue-700' },
+    { label: language === 'ta' ? 'வரவிருக்கும் நிகழ்வுகள்' : 'Upcoming Events', value: '4', icon: <Calendar className="w-6 h-6" />, color: 'bg-gold/10 text-gold-dark' },
+    { label: language === 'ta' ? 'அறிவிப்புகள்' : 'Announcements', value: '8', icon: <Megaphone className="w-6 h-6" />, color: 'bg-green-50 text-green-700' },
+    { label: language === 'ta' ? 'கேலரி படங்கள்' : 'Gallery Photos', value: '24', icon: <Image className="w-6 h-6" />, color: 'bg-purple-50 text-purple-700' },
   ]
 
   const recentActivity = [
@@ -41,7 +42,7 @@ export default function AdminDashboard() {
               </p>
             </div>
             <div className="flex gap-3">
-              <Link href="/events/create" className="px-5 py-2.5 bg-orange-600 text-white font-bold rounded-xl shadow-lg shadow-orange-100 hover:bg-orange-700 transition-all active:scale-95">
+              <Link href="/events/create" className="px-5 py-2.5 bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-100 hover:bg-red-800 transition-all active:scale-95">
                 + {language === 'ta' ? 'நிகழ்வு சேர்' : 'Add Event'}
               </Link>
               <Link href="/announcements/create" className="px-5 py-2.5 bg-slate-900 text-white font-bold rounded-xl shadow-lg shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95">
@@ -76,27 +77,37 @@ export default function AdminDashboard() {
                 </div>
                 <div className="p-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <Link href="/admin/members" className="group p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:bg-blue-50/30 transition-all">
-                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">👥</div>
+                    <div className="mb-3 group-hover:scale-110 transition-transform">
+                      <Users className="w-8 h-8 text-blue-600" strokeWidth={1.5} />
+                    </div>
                     <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'உறுப்பினர்கள்' : 'Manage Members'}</h3>
                     <p className="text-sm text-slate-500">View and manage community member profiles.</p>
                   </Link>
-                  <Link href="/events" className="group p-6 rounded-2xl border border-slate-100 hover:border-orange-200 hover:bg-orange-50/30 transition-all">
-                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">🗓️</div>
+                  <Link href="/events" className="group p-6 rounded-2xl border border-slate-100 hover:border-gold/30 hover:bg-gold/5 transition-all">
+                    <div className="mb-3 group-hover:scale-110 transition-transform">
+                      <Calendar className="w-8 h-8 text-gold-dark" strokeWidth={1.5} />
+                    </div>
                     <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'நிகழ்வுகள்' : 'Manage Events'}</h3>
                     <p className="text-sm text-slate-500">Update the festival calendar and special poojas.</p>
                   </Link>
                   <Link href="/admin/gallery" className="group p-6 rounded-2xl border border-slate-100 hover:border-purple-200 hover:bg-purple-50/30 transition-all">
-                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">📸</div>
+                    <div className="mb-3 group-hover:scale-110 transition-transform">
+                      <Image className="w-8 h-8 text-purple-600" strokeWidth={1.5} />
+                    </div>
                     <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'கேலரி' : 'Manage Gallery'}</h3>
                     <p className="text-sm text-slate-500">Upload and organize temple photos and videos.</p>
                   </Link>
                   <Link href="/about" className="group p-6 rounded-2xl border border-slate-100 hover:border-green-200 hover:bg-green-50/30 transition-all">
-                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">🏛️</div>
+                    <div className="mb-3 group-hover:scale-110 transition-transform">
+                      <Building2 className="w-8 h-8 text-green-600" strokeWidth={1.5} />
+                    </div>
                     <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'கோவில் தகவல்' : 'Temple Information'}</h3>
                     <p className="text-sm text-slate-500">Update temple history, location, and contact details.</p>
                   </Link>
                   <Link href="/admin/analytics" className="group p-6 rounded-2xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all md:col-span-2 lg:col-span-1">
-                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">📊</div>
+                    <div className="mb-3 group-hover:scale-110 transition-transform">
+                      <BarChart3 className="w-8 h-8 text-indigo-600" strokeWidth={1.5} />
+                    </div>
                     <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'பகுப்பாய்வு' : 'Analytics & Data'}</h3>
                     <p className="text-sm text-slate-500">View revenue reports, activities, and metrics.</p>
                   </Link>
@@ -115,7 +126,7 @@ export default function AdminDashboard() {
                 <div className="space-y-6">
                   {recentActivity.map((item) => (
                     <div key={item.id} className="flex gap-4 items-start">
-                      <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0"></div>
                       <div>
                         <p className="text-sm font-bold text-slate-900">{item.action}</p>
                         <p className="text-xs text-slate-400 font-medium">by <span className="text-slate-600 font-bold">{item.user}</span> • {item.time}</p>

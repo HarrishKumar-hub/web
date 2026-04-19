@@ -91,11 +91,11 @@ export default function AdminMembersPage() {
                         <select 
                           value={member.role}
                           onChange={(e) => handleRoleChange(member.id, e.target.value)}
-                          className={\`text-xs font-bold rounded-full px-3 py-1 border-2 focus:outline-none cursor-pointer \${
+                          className={`text-xs font-bold rounded-full px-3 py-1 border-2 focus:outline-none cursor-pointer ${
                             member.role === 'ADMIN' ? 'bg-red-50 text-red-700 border-red-200' : 
                             member.role === 'MEMBER' ? 'bg-blue-50 text-blue-700 border-blue-200' :
                             'bg-slate-100 text-slate-700 border-slate-200'
-                          }\`}
+                          }`}
                         >
                           <option value="ADMIN">ADMIN</option>
                           <option value="MEMBER">MEMBER</option>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Language, t } from '@/lib/translations'
+import { UserCircle, Heart } from 'lucide-react'
 
 interface MemberCardProps {
   member: {
@@ -19,33 +20,44 @@ export default function MemberCard({ member, language }: MemberCardProps) {
   })
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:shadow-md transition-shadow">
-      <div className="w-24 h-24 rounded-full overflow-hidden mb-4 bg-gray-100 border-4 border-white shadow-sm flex items-center justify-center">
-        {member.profilePhotoUrl ? (
-          <img src={member.profilePhotoUrl} alt={member.name} className="w-full h-full object-cover" />
-        ) : (
-          <span className="text-4xl">👤</span>
-        )}
+    <div className="card-temple border-none shadow-ivory flex flex-col items-center text-center overflow-hidden relative group">
+      {/* Decorative top header bg */}
+      <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-gold/10 to-transparent" />
+      
+      {/* Avatar Container */}
+      <div className="relative z-10 w-24 h-24 rounded-full overflow-hidden mb-5 bg-ivory-warm border-[3px] border-gold p-1 shadow-golden">
+        <div className="w-full h-full rounded-full overflow-hidden bg-ivory flex items-center justify-center">
+          {member.profilePhotoUrl ? (
+            <img src={member.profilePhotoUrl} alt={member.name} className="w-full h-full object-cover" />
+          ) : (
+            <UserCircle className="w-12 h-12 text-gold/40" strokeWidth={1} />
+          )}
+        </div>
       </div>
       
-      <h3 className="text-xl font-bold text-dark mb-1">{member.name}</h3>
+      {/* Name */}
+      <h3 className="relative z-10 text-xl font-serif font-bold text-gold-dark mb-2">
+        {member.name}
+      </h3>
       
-      <div className="mb-3">
-        <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-          member.role === 'ADMIN' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
-        }`}>
+      {/* Role Badge */}
+      <div className="mb-5 relative z-10">
+        <span className={member.role === 'ADMIN' ? 'badge-sacred' : 'badge-gold'}>
           {member.role === 'ADMIN' ? (language === 'ta' ? 'நிர்வாகி' : 'Admin') : (language === 'ta' ? 'உறுப்பினர்' : 'Member')}
         </span>
       </div>
 
+      {/* Bio */}
       {member.bio && (
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3 w-full">
-          {member.bio}
+        <p className="font-lora text-sacred-ash/60 text-sm leading-relaxed mb-6 line-clamp-3 w-full relative z-10 px-2 flex-grow">
+          "{member.bio}"
         </p>
       )}
 
-      <div className="mt-auto pt-4 border-t w-full text-xs text-gray-400">
-        {t('member.joinDate', language)}: {joinDate}
+      {/* Footer Details */}
+      <div className="mt-auto pt-5 border-t border-gold/10 w-full flex items-center gap-2 justify-center text-[9px] font-black uppercase tracking-[0.2em] text-gold-dark/50 relative z-10">
+        <Heart className="w-3 h-3 text-saffron/60" />
+        {t('member.joinDate', language)} {joinDate}
       </div>
     </div>
   )

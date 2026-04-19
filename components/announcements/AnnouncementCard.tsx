@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import { t, Language } from '@/lib/translations'
+import { Language } from '@/lib/translations'
+import { Pin, MessageSquare } from 'lucide-react'
 
 interface AnnouncementCardProps {
   announcement: {
@@ -28,30 +29,43 @@ export default function AnnouncementCard({ announcement, language }: Announcemen
   })
 
   return (
-    <div className={`bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border-l-4 ${announcement.isPinned ? 'border-red-500' : 'border-primary'}`}>
-      <div className="p-5">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-bold text-dark line-clamp-2">{displayTitle}</h3>
+    <div className={`card-temple border-l-4 ${announcement.isPinned ? 'border-l-saffron bg-ivory-warm' : 'border-l-gold/30 bg-ivory'} relative overflow-hidden group`}>
+      {/* Background graphic for pinned */}
+      {announcement.isPinned && (
+        <div className="absolute right-0 top-0 w-32 h-32 bg-saffron/5 rounded-bl-[100px] pointer-events-none" />
+      )}
+      
+      <div className="relative z-10">
+        <div className="flex justify-between items-start mb-3 gap-4">
+          <h3 className="text-xl font-serif font-bold text-gold-dark line-clamp-2 leading-snug group-hover:text-saffron-dark transition-colors">
+            {displayTitle}
+          </h3>
           {announcement.isPinned && (
-            <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded ml-2 whitespace-nowrap">
-              {language === 'ta' ? 'பின்க செய்யப்பட்ட' : 'Pinned'}
+            <span className="badge-pinned shadow-flame/20 flex items-center gap-1.5">
+              <Pin className="w-2.5 h-2.5" />
+              {language === 'ta' ? 'பின்க செய்யப்பட்டது' : 'Pinned'}
             </span>
           )}
         </div>
         
-        <p className="text-sm text-gray-500 mb-4">{displayDate}</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.25em] text-gold mb-4">
+          {displayDate}
+        </p>
         
-        <p className="text-gray-700 line-clamp-3 mb-4">{displayContent}</p>
+        <p className="font-lora text-sacred-ash/65 leading-relaxed line-clamp-3 mb-6 text-sm">
+          {displayContent}
+        </p>
 
-        <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
-          <span className="text-sm text-gray-500 flex items-center">
-            💬 {announcement._count?.comments || 0} {language === 'ta' ? 'கருத்துக்கள்' : 'Comments'}
+        <div className="flex justify-between items-center pt-4 border-t border-gold/10">
+          <span className="text-[10px] font-black uppercase tracking-widest text-sacred-smoke flex items-center gap-2">
+            <MessageSquare className="w-3.5 h-3.5" /> {announcement._count?.comments || 0} {language === 'ta' ? 'கருத்துக்கள்' : 'Comments'}
           </span>
           <Link 
             href={`/announcements/${announcement.id}`}
-            className="text-primary hover:text-red-700 font-medium text-sm transition-colors"
+            className="text-[10px] font-black uppercase tracking-widest text-saffron hover:text-maroon transition-colors flex items-center gap-2"
           >
-            {language === 'ta' ? 'மேலும் படிக்க' : 'Read More'} →
+            {language === 'ta' ? 'மேலும் படிக்க' : 'Read More'} 
+            <span className="text-lg leading-none mb-0.5">→</span>
           </Link>
         </div>
       </div>

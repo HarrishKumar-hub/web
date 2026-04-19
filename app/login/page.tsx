@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/useAuth'
 import { t, type Language } from '@/lib/translations'
+import { Flame } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -49,8 +50,8 @@ export default function LoginPage() {
       <div className="w-full max-w-lg z-10 transition-all duration-500">
         <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-orange-50">
           <div className="text-center mb-10">
-            <div className="inline-block p-4 bg-orange-50 rounded-2xl mb-4">
-              <span className="text-5xl">🔱</span>
+            <div className="inline-flex p-4 bg-saffron/10 rounded-2xl mb-4">
+              <Flame className="w-10 h-10 text-saffron animate-lamp-flicker" />
             </div>
             <h1 className="text-3xl font-extrabold text-dark tracking-tight mb-2">
               {t('auth.login', language)}

@@ -2,47 +2,303 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  :root {
+    --gold:          212 175 55;
+    --gold-dark:     153 101 21;
+    --gold-metallic: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #FFD700 100%);
+    --saffron:       232 114 42;
+    --saffron-dark:  194 90 24;
+    --maroon:        123 28 28;
+    --ivory:         250 247 240;
+    --sacred-ash:    61 43 31;
+    --white:         255 255 255;
+    --heritage-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af23' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ivory text-sacred-ash antialiased;
+    font-family: var(--font-dm-sans), var(--font-sans), sans-serif;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    letter-spacing: -0.01em;
+    background-image: var(--heritage-pattern);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight;
+    font-family: var(--font-cinzel), serif;
+  }
+
+  p, li, span, label, input, textarea, select {
+    font-family: var(--font-dm-sans), var(--font-sans), sans-serif;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+@layer components {
+
+  /* ── Layout ─────────────────────────────────── */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-6 sm:px-12 lg:px-16;
+  }
+
+  /* ── Shadows ─────────────────────────────────── */
+  .shadow-golden {
+    box-shadow: 0 20px 50px -15px rgba(212, 175, 55, 0.18);
+  }
+  .shadow-golden-lg {
+    box-shadow: 0 30px 80px -20px rgba(153, 101, 21, 0.22);
+  }
+  .shadow-temple {
+    box-shadow: 0 25px 60px -10px rgba(123, 28, 28, 0.18);
+  }
+  .shadow-flame {
+    box-shadow: 0 15px 40px -10px rgba(232, 114, 42, 0.35);
+  }
+  .shadow-ivory {
+    box-shadow: 0 8px 30px -8px rgba(61, 43, 31, 0.08);
+  }
+
+  /* ── Background Helpers ──────────────────────── */
+  .bg-metallic-gold {
+    background: linear-gradient(135deg, #996515 0%, #D4AF37 25%, #F4CE6A 50%, #D4AF37 75%, #996515 100%);
+    background-size: 200% auto;
+  }
+  .bg-temple-footer {
+    background: linear-gradient(160deg, #4A0E0E 0%, #7B1C1C 40%, #1a0a2e 100%);
+  }
+  .bg-saffron-glow {
+    background: linear-gradient(135deg, #C25A18 0%, #E8722A 50%, #F5A761 100%);
+  }
+  .bg-ivory-section {
+    background: linear-gradient(180deg, #FAF7F0 0%, #F5EFE0 100%);
+  }
+  .bg-maroon-section {
+    background: linear-gradient(135deg, #7B1C1C08 0%, #4A0E0E0D 100%);
+  }
+
+  /* ── Text Gradients ──────────────────────────── */
+  .text-metallic-gold {
+    background: linear-gradient(135deg, #996515 0%, #D4AF37 50%, #996515 100%);
+    @apply bg-clip-text text-transparent;
+    background-size: 200% auto;
+  }
+  .text-saffron-gradient {
+    background: linear-gradient(135deg, #C25A18 0%, #E8722A 50%, #F5A761 100%);
+    @apply bg-clip-text text-transparent;
+  }
+
+  /* ── Divine Glows ──────────────────────────── */
+  .divine-glow-saffron {
+    background: radial-gradient(circle at center, rgba(232, 114, 42, 0.15) 0%, transparent 70%);
+    filter: blur(40px);
+  }
+  .divine-glow-gold {
+    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    filter: blur(60px);
+  }
+
+  /* ── Buttons ─────────────────────────────────── */
+
+  /* Primary gold button (unchanged API, updated style) */
+  .btn-premium {
+    @apply relative overflow-hidden px-12 py-4 rounded-full
+           font-sans font-black uppercase text-[10px]
+           transition-all duration-500
+           hover:-translate-y-1.5 active:scale-95;
+    background: linear-gradient(135deg, #996515 0%, #D4AF37 50%, #C5A028 100%);
+    color: #fff;
+    letter-spacing: 0.25em;
+    box-shadow: 0 8px 30px -8px rgba(212, 175, 55, 0.5);
+  }
+  .btn-premium::after {
+    content: '';
+    @apply absolute inset-0 translate-x-[-100%] transition-transform duration-700;
+    background: rgba(255,255,255,0.18);
+  }
+  .btn-premium:hover::after {
+    @apply translate-x-[100%];
+  }
+  .btn-premium:hover {
+    box-shadow: 0 16px 48px -8px rgba(212, 175, 55, 0.55);
+  }
+
+  /* Saffron CTA — for primary page actions */
+  .btn-sacred {
+    @apply relative overflow-hidden px-12 py-4 rounded-full
+           font-sans font-black uppercase text-[10px] text-white
+           transition-all duration-500
+           hover:-translate-y-1.5 active:scale-95;
+    background: linear-gradient(135deg, #C25A18 0%, #E8722A 100%);
+    letter-spacing: 0.25em;
+    box-shadow: 0 10px 35px -8px rgba(232, 114, 42, 0.5);
+  }
+  .btn-sacred::after {
+    content: '';
+    @apply absolute inset-0 translate-x-[-100%] transition-transform duration-700;
+    background: rgba(255,255,255,0.2);
+  }
+  .btn-sacred:hover::after  { @apply translate-x-[100%]; }
+  .btn-sacred:hover {
+    box-shadow: 0 18px 50px -8px rgba(232, 114, 42, 0.6);
+  }
+
+  /* Ghost outline button */
+  .btn-outline-gold {
+    @apply relative overflow-hidden px-10 py-4 rounded-full
+           font-sans font-black uppercase text-[10px] text-gold-dark
+           border-2 border-gold transition-all duration-500
+           hover:-translate-y-1.5 hover:text-white active:scale-95;
+    letter-spacing: 0.25em;
+  }
+  .btn-outline-gold:hover {
+    background: linear-gradient(135deg, #996515, #D4AF37);
+    border-color: transparent;
+    box-shadow: 0 12px 36px -8px rgba(212, 175, 55, 0.5);
+  }
+
+  /* ── Cards ───────────────────────────────────── */
+
+  /* Premium card — ivory bg, gold border */
+  .card-premium {
+    @apply bg-ivory rounded-[50px] border border-gold/20
+           p-12 transition-all duration-700
+           hover:border-gold/40 hover:shadow-golden-lg;
+  }
+
+  /* Temple card — warm ivory, maroon left accent on hover */
+  .card-temple {
+    @apply bg-ivory rounded-[30px] border border-gold/10 p-8
+           transition-all duration-500
+           hover:border-saffron/30 hover:shadow-flame
+           hover:-translate-y-1;
+  }
+
+  /* Dark card — for footer / contrast sections */
+  .card-dark {
+    @apply rounded-[24px] border border-white/10 p-8
+           bg-white/5 backdrop-blur-sm
+           transition-all duration-500
+           hover:border-gold/30 hover:bg-white/10;
+  }
+
+  /* ── Badges ──────────────────────────────────── */
+  .badge-sacred {
+    @apply inline-flex items-center gap-2 px-5 py-1.5 rounded-full
+           text-[10px] font-black uppercase;
+    background: rgba(232, 114, 42, 0.12);
+    color: #C25A18;
+    border: 1px solid rgba(232, 114, 42, 0.25);
+    letter-spacing: 0.35em;
+  }
+  .badge-gold {
+    @apply inline-flex items-center gap-2 px-5 py-1.5 rounded-full
+           text-[10px] font-black uppercase;
+    background: rgba(212, 175, 55, 0.12);
+    color: #996515;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    letter-spacing: 0.35em;
+  }
+  .badge-pinned {
+    @apply inline-flex items-center gap-1.5 px-4 py-1 rounded-full
+           text-[10px] font-black uppercase text-white;
+    background: linear-gradient(135deg, #C25A18, #E8722A);
+    letter-spacing: 0.25em;
+  }
+
+  /* ── Section Headings ────────────────────────── */
+  .section-label {
+    @apply text-[10px] font-black uppercase block mb-4 tracking-[0.4em];
+    color: #C25A18;
+  }
+  .section-label-gold {
+    @apply text-[10px] font-black uppercase block mb-4 tracking-[0.4em];
+    color: #C5A028;
+  }
+
+  /* ── Ornamental Dividers ─────────────────────── */
+  .divider-gold {
+    @apply flex items-center gap-6 my-8;
+  }
+  .divider-gold::before,
+  .divider-gold::after {
+    content: '';
+    @apply flex-1 h-px bg-gold/25;
+  }
+  .divider-gold-text {
+    @apply text-gold/50 text-lg;
+  }
+
+  /* ── Input Styles ────────────────────────────── */
+  .input-temple {
+    @apply w-full px-5 py-4 rounded-2xl text-sacred-ash
+           bg-white border border-gold/20
+           focus:outline-none focus:border-saffron/60 focus:ring-2 focus:ring-saffron/20
+           placeholder:text-sacred-smoke/50
+           transition-all duration-300 font-sans;
+  }
+
+  /* ── Glassmorphism ───────────────────────────── */
+  .glass-header {
+    background: rgba(250, 247, 240, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  }
+  .glass-dark {
+    background: rgba(26, 10, 5, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+  }
 }
 
-body {
-  @apply bg-light text-dark;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ── Typography Utilities ───────────────────────── */
+.tracking-sacred { letter-spacing: 0.5em; }
+.tracking-divine { letter-spacing: 0.3em; }
+
+/* ── Custom Scrollbar ───────────────────────────── */
+::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar-track { background: #FAF7F0; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#D4AF37, #C25A18);
+  border-radius: 999px;
+  border: 2px solid #FAF7F0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ── Animations ─────────────────────────────────── */
+@keyframes flicker {
+  0%, 100% { opacity: 0.8; }
+  50%       { opacity: 1; }
+}
+.animate-divine-flicker { animation: flicker 3s infinite ease-in-out; }
+
+@keyframes lampFlicker {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  33%       { opacity: 1;   transform: scale(1.05); }
+  66%       { opacity: 0.85; transform: scale(0.98); }
+}
+.animate-lamp-flicker { animation: lampFlicker 2.5s infinite ease-in-out; }
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+.animate-float { animation: floatGentle 6s infinite ease-in-out; }
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s infinite linear;
 }
 
-/* Utility classes */
-.container-custom {
-  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-}
-
-.btn-primary {
-  @apply px-4 py-2 bg-primary text-white rounded-lg hover:bg-red-700 transition-colors;
-}
-
-.btn-secondary {
-  @apply px-4 py-2 bg-secondary text-dark rounded-lg hover:bg-yellow-600 transition-colors;
-}
-
-.btn-outline {
-  @apply px-4 py-2 border-2 border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors;
-}
-
-.card {
-  @apply bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow;
-}
+/* ── Prose overrides ──────────────────────────── */
+.prose-temple p   { @apply text-sacred-ash/70 leading-relaxed text-lg; }
+.prose-temple h2  { @apply text-gold-dark font-serif; }

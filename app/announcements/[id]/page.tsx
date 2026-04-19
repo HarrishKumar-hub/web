@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { Language, t } from '@/lib/translations'
 import CommentSection from '@/components/announcements/CommentSection'
+import { Pin, Calendar, User, MessageSquare, ChevronLeft } from 'lucide-react'
 
 // Same mock data - in production these would come from the API
 const MOCK_ANNOUNCEMENTS: Record<string, any> = {
@@ -93,47 +94,60 @@ export default function AnnouncementDetailPage() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="min-h-screen bg-ivory py-16">
         <div className="container-custom max-w-4xl">
           {/* Breadcrumb */}
-          <div className="mb-6 text-sm text-gray-500">
-            <Link href="/announcements" className="hover:text-primary transition-colors">
+          <div className="mb-8 text-sm text-sacred-ash/50 font-sans font-semibold">
+            <Link href="/announcements" className="hover:text-saffron transition-colors">
               {t('announcement.title', language)}
             </Link>
             <span className="mx-2">→</span>
-            <span className="text-gray-700">{displayTitle}</span>
+            <span className="text-sacred-ash">{displayTitle}</span>
           </div>
 
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+          <div className="card-temple p-0 overflow-hidden border-none shadow-golden-lg">
             {announcement.isPinned && (
-              <div className="mb-4 inline-block bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded-full">
-                📌 {language === 'ta' ? 'பின்க செய்யப்பட்ட அறிவிப்பு' : 'Pinned Announcement'}
+              <div className="absolute top-6 right-6 z-20">
+                <span className="badge-pinned flex items-center gap-1.5 shadow-flame/20">
+                  <Pin className="w-3 h-3" />
+                  {language === 'ta' ? 'பின்க செய்யப்பட்டது' : 'Pinned'}
+                </span>
               </div>
             )}
             
-            <h1 className="text-4xl font-bold mb-4">{displayTitle}</h1>
-            
-            <div className="text-gray-500 mb-8 border-b pb-4 flex items-center gap-2">
-              <span>📅</span> {displayDate} 
-              <span className="mx-2">•</span> 
-              <span>✍️</span> {announcement.creator?.name || 'Admin'}
-            </div>
+            <div className="p-10 md:p-14">
+              <h1 className="text-4xl md:text-5xl font-serif font-bold text-gold-dark mb-8 leading-tight tracking-tight">{displayTitle}</h1>
+              
+              <div className="flex flex-wrap items-center gap-6 text-sacred-ash/50 mb-10 pb-8 border-b border-gold/10 text-sm font-sans font-bold uppercase tracking-widest">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-saffron" />
+                  <span>{displayDate}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4 text-saffron" />
+                  <span>{announcement.creator?.name || 'Admin'}</span>
+                </div>
+              </div>
 
             {announcement.imageUrl && (
-              <img src={announcement.imageUrl} alt={displayTitle} className="w-full h-auto max-h-96 object-cover rounded-xl mb-8 bg-gray-100 shadow-sm" />
+              <div className="mb-12 rounded-[32px] overflow-hidden border border-gold/10 shadow-temple">
+                <img src={announcement.imageUrl} alt={displayTitle} className="w-full h-auto max-h-[500px] object-cover" />
+              </div>
             )}
 
-            <div className="prose max-w-none mb-12 whitespace-pre-wrap text-lg leading-relaxed text-gray-700">
+            <div className="prose-temple max-w-none mb-16 whitespace-pre-wrap text-lg leading-relaxed">
               {displayContent}
             </div>
 
             {/* Share section */}
-            <div className="border-t pt-6 flex items-center justify-between">
-              <Link href="/announcements" className="text-primary hover:text-red-700 font-medium transition-colors">
-                ← {language === 'ta' ? 'அறிவிப்புகளுக்குச் செல்க' : 'Back to Announcements'}
+            <div className="border-t border-gold/10 pt-10 flex items-center justify-between">
+              <Link href="/announcements" className="flex items-center gap-2 text-saffron hover:text-maroon font-black uppercase tracking-widest text-xs transition-colors">
+                <ChevronLeft className="w-4 h-4" />
+                {language === 'ta' ? 'அறிவிப்புகளுக்குச் செல்க' : 'Back to Announcements'}
               </Link>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                💬 {announcement._count?.comments || 0} {language === 'ta' ? 'கருத்துக்கள்' : 'Comments'}
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-sacred-ash/50">
+                <MessageSquare className="w-4 h-4" />
+                {announcement._count?.comments || 0} {language === 'ta' ? 'கருத்துக்கள்' : 'Comments'}
               </div>
             </div>
 

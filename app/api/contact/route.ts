@@ -17,9 +17,9 @@ export async function POST(req: NextRequest) {
     // await resend.emails.send({ from: 'Acme <onboarding@resend.dev>', to: ['contact@kovilcommunity.com'], subject: 'New Reach', text: message });
     
     // For local operations where environment configurations omit native setups:
-    console.log([\`MOCK EMAIL DISPATCHED\`])
-    console.log(\`From: \${name} <\${email}>\`)
-    console.log(\`Message: \n\${message}\`)
+    console.log([`MOCK EMAIL DISPATCHED`])
+    console.log(`From: ${name} <${email}>`)
+    console.log(`Message: \n${message}`)
     
     // Wait ~800ms simulating secure proxy SMTP connections
     await new Promise(r => setTimeout(r, 800))

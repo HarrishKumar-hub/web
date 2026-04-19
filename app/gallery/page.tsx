@@ -16,7 +16,7 @@ const MOCK_MEDIA = [
     fileUrl: 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1d?auto=format&fit=crop&q=80&w=1200',
     thumbnailUrl: 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1d?auto=format&fit=crop&q=80&w=400',
     category: 'CEREMONY',
-    description: 'The majestic entrance of Sri Ayyanar Karuppasamy Kovil.'
+    description: 'The majestic entrance of Sri Karuppusamy Thirukovil.'
   },
   {
     id: '2',
@@ -79,26 +79,26 @@ export default function GalleryPage() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="min-h-screen bg-ivory py-20">
         <div className="container-custom">
-          <div className="text-center mb-10">
-            <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-800 mb-4">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold text-gold-dark mb-6 tracking-tight">
               {t('nav.gallery', language)}
             </h1>
-            <p className="text-xl text-gray-600">
-              {language === 'ta' ? 'எங்கள் நிகழ்வுகள் மற்றும் விழாக்களின் தருணங்கள்' : 'Moments from our events and ceremonies'}
+            <p className="text-xl text-sacred-ash/60 font-lora italic italic">
+              {language === 'ta' ? 'எங்கள் நிகழ்வுகள் மற்றும் விழாக்களின் தருணங்கள்' : 'Glimpses of sacred moments from our rituals and community gatherings'}
             </p>
           </div>
 
-          <div className="flex justify-center flex-wrap gap-3 mb-10">
+          <div className="flex justify-center flex-wrap gap-4 mb-16 bg-ivory-warm p-1.5 rounded-full border border-gold/15 max-w-fit mx-auto shadow-ivory">
             {['', 'EVENT', 'CEREMONY', 'OTHER'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategoryFilter(cat)}
-                className={`px-6 py-2 rounded-full font-bold transition-all duration-300 shadow-sm border ${
+                className={`px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
                   categoryFilter === cat
-                    ? 'bg-orange-600 text-white border-orange-600 scale-105 shadow-md'
-                    : 'bg-white text-gray-600 hover:bg-orange-50 border-gray-200 hover:border-orange-200'
+                    ? 'bg-maroon text-ivory shadow-temple'
+                    : 'text-sacred-ash/50 hover:text-gold-dark'
                 }`}
               >
                 {cat === '' ? (language === 'ta' ? 'அனைத்தும்' : 'All') : (
@@ -112,10 +112,10 @@ export default function GalleryPage() {
 
           <MediaGrid mediaFiles={media} language={language} />
           
-          <div className="mt-16 text-center text-gray-500 italic">
+          <div className="mt-20 text-center text-sacred-ash/40 font-lora italic border-t border-gold/10 pt-10">
             {language === 'ta' 
               ? 'மேலும் படங்கள் விரைவில் சேர்க்கப்படும்...' 
-              : 'More photos will be added soon...'}
+              : 'Divine captures will be appended as rituals unfold...'}
           </div>
         </div>
       </main>

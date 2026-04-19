@@ -1,29 +1,38 @@
 import type { Metadata } from 'next'
+import { Cinzel, Lora, DM_Sans } from 'next/font/google'
 import { AuthProvider } from '@/lib/useAuth'
 import '../styles/globals.css'
 
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  weight: ['400', '600', '700', '900'],
+  display: 'swap',
+})
+const lora = Lora({
+  subsets: ['latin'],
+  variable: '--font-lora',
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  weight: ['400', '500', '700', '900'],
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'Sri Ayyanar Karuppasamy - Kovil Community',
-  description: 'A dedicated spiritual community portal for devotees and visitors to engage with temple activities, events, and daily annadhanam.',
-  keywords: ['Temple', 'Kovil', 'Hindu Community', 'Annadhanam', 'Pooja', 'Ayyanar Karuppasamy'],
+  title: 'Sri Karuppusamy Thirukovil - Sanctuary Portal',
+  description: 'A luxurious spiritual community portal for the devotees of Sri Karuppusamy Thirukovil in Mathanaickenpatti.',
+  keywords: ['Temple', 'Kovil', 'Hindu Community', 'Annadhanam', 'Pooja', 'Karuppusamy'],
   authors: [{ name: 'Temple Web Administration' }],
-  openGraph: {
-    title: 'Sri Ayyanar Karuppasamy Kovil',
-    description: 'Join our digital spiritual community portal.',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'Kovil Community'
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Sri Ayyanar Karuppasamy Kovil'
-  }
 }
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#ea580c', // Tailwind Orange-600 matching our branding
+  themeColor: '#E8722A',
 }
 
 export default function RootLayout({
@@ -32,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={`${cinzel.variable} ${lora.variable} ${dmSans.variable}`}>
+      <body className="font-sans bg-ivory text-sacred-ash antialiased">
         <AuthProvider>
           {children}
         </AuthProvider>

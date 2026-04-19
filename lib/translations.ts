@@ -11,6 +11,11 @@ const translations: Record<string, Record<string, string>> = {
     'nav.login': 'Login',
     'nav.logout': 'Logout',
     'nav.profile': 'Profile',
+    'nav.reach': 'How To Reach',
+    'nav.booking': 'Online Booking',
+    'nav.timings': 'Pooja Timings',
+    'nav.facilities': 'Pilgrim Facilities',
+    'nav.rules': "Do's and Don'ts",
 
     'common.welcome': 'Welcome',
     'common.loading': 'Loading...',
@@ -74,6 +79,11 @@ const translations: Record<string, Record<string, string>> = {
     'nav.login': 'உள்நுழைக',
     'nav.logout': 'வெளியேறு',
     'nav.profile': 'சுயவிவரம்',
+    'nav.reach': 'வழித்தடம்',
+    'nav.booking': 'முன்பதிவு',
+    'nav.timings': 'பூஜை நேரங்கள்',
+    'nav.facilities': 'பக்தர் வசதிகள்',
+    'nav.rules': 'விதிமுறைகள்',
 
     'common.welcome': 'வரவேற்கிறோம்',
     'common.loading': 'ஏற்றுதல்...',

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/useAuth'
 import { t, type Language } from '@/lib/translations'
+import { Flame } from 'lucide-react'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -54,47 +55,49 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fcf8f1] flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-ivory flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Decorative Background Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-100 rounded-full blur-[100px] opacity-50"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-100 rounded-full blur-[100px] opacity-50"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-saffron/10 rounded-full blur-[120px] opacity-60"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-gold/15 rounded-full blur-[120px] opacity-60"></div>
 
       <div className="w-full max-w-lg z-10 transition-all duration-500">
-        {/* Card */}
-        <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-orange-50">
+        
+        <div className="card-temple border-none shadow-golden-lg p-10 md:p-12 relative overflow-hidden">
           {/* Header */}
           <div className="text-center mb-10">
-            <div className="inline-block p-4 bg-orange-50 rounded-2xl mb-4">
-              <span className="text-5xl">🕉️</span>
+            <div className="inline-flex p-4 bg-saffron/10 border border-saffron/20 rounded-[20px] mb-5 shadow-flame/10">
+              <Flame className="w-10 h-10 text-saffron animate-lamp-flicker" />
             </div>
-            <h1 className="text-3xl font-extrabold text-dark tracking-tight mb-2">
-              {language === 'ta' ? 'உறுப்பினர் பதிவு' : 'Member Registration'}
+            <h1 className="text-3xl font-serif font-bold text-gold-dark tracking-tight mb-3">
+              {language === 'ta' ? 'உறுப்பினர் பதிவு' : 'Digital Sanctuary'}
             </h1>
-            <p className="text-gray-500 font-medium">
+            <p className="text-sacred-ash/60 font-medium font-lora">
               {language === 'ta'
-                ? 'ஸ்ரீ அய்யனார் கருப்பசாமி கோவில் சமூகத்தில் இணையுங்கள்'
-                : 'Join the Sri Ayyanar Karuppasamy Kovil community'}
+                ? 'ஸ்ரீ கருப்பசாமி திருக்கோவில் சமூகத்தில் இணையுங்கள்'
+                : 'Join the Sri Karuppusamy Thirukovil community'}
             </p>
           </div>
 
           {/* Language Selector */}
-          <div className="flex bg-gray-50 p-1 rounded-xl mb-8 border border-gray-100">
+          <div className="flex bg-ivory-warm p-1.5 rounded-full mb-8 border border-gold/15 shadow-ivory">
             <button
+              type="button"
               onClick={() => setLanguage('en')}
-              className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${
+              className={`flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-full transition-all duration-300 ${
                 language === 'en'
-                  ? 'bg-white text-orange-700 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-maroon text-ivory shadow-temple'
+                  : 'text-sacred-ash/50 hover:text-gold-dark'
               }`}
             >
               English
             </button>
             <button
+              type="button"
               onClick={() => setLanguage('ta')}
-              className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${
+              className={`flex-1 py-2 text-xs font-black tracking-widest rounded-full transition-all duration-300 ${
                 language === 'ta'
-                  ? 'bg-white text-orange-700 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-maroon text-ivory shadow-temple'
+                  : 'text-sacred-ash/50 hover:text-gold-dark'
               }`}
             >
               தமிழ்
@@ -103,106 +106,103 @@ export default function RegisterPage() {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-r-lg mb-6 text-sm">
-              <span className="font-bold">Error:</span> {error}
+            <div className="bg-maroon/5 border-l-4 border-maroon text-maroon px-5 py-4 rounded-xl mb-6 text-sm font-medium">
+              <span className="font-bold block mb-1">Notice</span>
+              {error}
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 gap-6">
-              {/* Name */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-xs uppercase tracking-widest font-bold text-gold-dark mb-2">
+                {t('auth.name', language)}
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="input-temple"
+                placeholder={language === 'ta' ? 'உங்கள் பெயர்' : 'Devotee Name'}
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs uppercase tracking-widest font-bold text-gold-dark mb-2">
+                {t('auth.email', language)}
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="input-temple"
+                placeholder="devotee@example.com"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">
-                  {t('auth.name', language)}
+                <label className="block text-xs uppercase tracking-widest font-bold text-gold-dark mb-2">
+                  {t('auth.password', language)}
                 </label>
                 <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
+                  type="password"
+                  name="password"
+                  value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-dark md:text-lg"
-                  placeholder={language === 'ta' ? 'உங்கள் பெயர்' : 'Full Name'}
+                  className="input-temple"
+                  placeholder="••••••••"
                 />
               </div>
-
-              {/* Email */}
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">
-                  {t('auth.email', language)}
+                <label className="block text-xs uppercase tracking-widest font-bold text-gold-dark mb-2">
+                  {language === 'ta' ? 'உறுதிசெய்க' : 'Confirm'}
                 </label>
                 <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-dark md:text-lg"
-                  placeholder="name@example.com"
+                  className="input-temple"
+                  placeholder="••••••••"
                 />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Password */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    {t('auth.password', language)}
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-dark md:text-lg"
-                    placeholder="••••••••"
-                  />
-                </div>
-
-                {/* Confirm Password */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    {language === 'ta' ? 'உறுதிசெய்க' : 'Confirm'}
-                  </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-dark md:text-lg"
-                    placeholder="••••••••"
-                  />
-                </div>
               </div>
             </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full mt-4 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-2xl font-extrabold text-lg shadow-lg hover:shadow-orange-200 hover:-translate-y-1 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  {t('common.loading', language)}
-                </span>
-              ) : t('auth.signUp', language)}
-            </button>
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="btn-sacred w-full flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {t('common.loading', language)}
+                  </>
+                ) : (
+                  t('auth.signUp', language)
+                )}
+              </button>
+            </div>
           </form>
 
           {/* Login Link */}
-          <div className="mt-10 text-center">
-            <p className="text-gray-500 font-medium">
+          <div className="mt-8 text-center pt-8 border-t border-gold/10">
+            <p className="text-sacred-ash/60 font-medium">
               {t('auth.haveAccount', language)}{' '}
               <Link
                 href="/login"
-                className="text-orange-700 font-extrabold hover:text-orange-800 border-b-2 border-orange-200 pb-0.5 ml-1 transition-all"
+                className="text-saffron font-bold hover:text-saffron-dark pb-0.5 ml-1 transition-colors underline decoration-saffron/30 underline-offset-4"
               >
                 {t('auth.login', language)}
               </Link>
@@ -211,9 +211,9 @@ export default function RegisterPage() {
         </div>
 
         {/* Back Link */}
-        <div className="text-center mt-12">
-          <Link href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-orange-700 font-bold transition-all">
-            <span className="text-xl">←</span> {t('common.back', language)}
+        <div className="text-center mt-8">
+          <Link href="/" className="inline-flex items-center gap-2 text-sacred-ash/40 hover:text-gold-dark font-medium uppercase text-xs tracking-widest transition-all">
+            <span className="text-lg leading-none mb-0.5">←</span> {t('common.back', language)}
           </Link>
         </div>
       </div>
