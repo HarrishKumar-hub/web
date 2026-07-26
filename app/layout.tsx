@@ -1,30 +1,30 @@
 import type { Metadata } from 'next'
-import { Cinzel, Lora, DM_Sans } from 'next/font/google'
+import { Cormorant_Garamond, Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import { AuthProvider } from '@/lib/useAuth'
 import '../styles/globals.css'
 
-const cinzel = Cinzel({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  variable: '--font-cinzel',
-  weight: ['400', '600', '700', '900'],
+  variable: '--font-cormorant',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
-const lora = Lora({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-lora',
-  style: ['normal', 'italic'],
+  variable: '--font-inter',
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 })
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-dm-sans',
-  weight: ['400', '500', '700', '900'],
+const anekTamil = localFont({
+  src: './fonts/AnekTamil.ttf',
+  variable: '--font-tamil',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Sri Karuppusamy Thirukovil - Sanctuary Portal',
-  description: 'A luxurious spiritual community portal for the devotees of Sri Karuppusamy Thirukovil in Mathanaickenpatti.',
+  title: 'Sri Karuppusamy Thirukovil | Mathanaickenpatti',
+  description: 'Official website of Sri Karuppusamy Thirukovil, Mathanaickenpatti. Stay informed about pooja timings, festival schedules, and community announcements.',
   keywords: ['Temple', 'Kovil', 'Hindu Community', 'Annadhanam', 'Pooja', 'Karuppusamy'],
   authors: [{ name: 'Temple Web Administration' }],
 }
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#E8722A',
+  themeColor: '#181612',
 }
 
 export default function RootLayout({
@@ -41,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${lora.variable} ${dmSans.variable}`}>
-      <body className="font-sans bg-ivory text-sacred-ash antialiased">
+    <html lang="en" className={`${cormorant.variable} ${inter.variable} ${anekTamil.variable}`}>
+      <body className="font-sans bg-stone-900 text-stone-100 antialiased selection:bg-brass-400 selection:text-stone-950">
         <AuthProvider>
           {children}
         </AuthProvider>

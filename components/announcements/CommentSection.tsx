@@ -62,8 +62,8 @@ export default function CommentSection({ announcementId, language }: CommentSect
   }
 
   return (
-    <div className="mt-8 border-t pt-8">
-      <h3 className="text-2xl font-bold mb-6">
+    <div className="mt-8 border-t border-brass/20 pt-8">
+      <h3 className="text-xl font-serif font-semibold text-stone-100 mb-6">
         {language === 'ta' ? 'கருத்துக்கள்' : 'Comments'} ({comments.length})
       </h3>
 
@@ -73,55 +73,55 @@ export default function CommentSection({ announcementId, language }: CommentSect
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder={language === 'ta' ? 'உங்கள் கருத்தை சேர்க்கவும்...' : 'Add your comment...'}
-            className="w-full border border-gray-300 rounded-lg p-3 mb-2 focus:outline-none focus:border-primary"
+            className="w-full bg-stone-900 border border-brass/30 rounded-xl p-4 mb-3 text-stone-100 placeholder-stone-500 focus:outline-none focus:border-brass-400 text-sm leading-relaxed"
             rows={3}
             required
           />
           <button
             type="submit"
             disabled={isSubmitting || !newComment.trim()}
-            className="btn-primary"
+            className="btn-premium px-6 py-2.5 text-xs"
           >
             {isSubmitting ? t('common.loading', language) : (language === 'ta' ? 'கருத்தை பதிவிடு' : 'Post Comment')}
           </button>
         </form>
       ) : (
-        <div className="bg-gray-100 p-4 rounded-lg text-center mb-8">
-          <p className="text-gray-600 mb-2">
+        <div className="bg-stone-900/80 border border-brass/20 p-6 rounded-2xl text-center mb-8">
+          <p className="text-stone-300 text-sm mb-2">
             {language === 'ta' ? 'கருத்துக்களைப் பதிவு செய்ய உள்நுழையவும்' : 'Please login to leave a comment'}
           </p>
-          <a href="/login" className="text-primary hover:underline font-medium">
+          <a href="/login" className="text-brass-300 hover:text-brass-200 hover:underline font-semibold text-xs uppercase tracking-[0.15em]">
             {t('nav.login', language)}
           </a>
         </div>
       )}
 
       {isLoading ? (
-        <div className="text-center text-gray-500 py-4">{t('common.loading', language)}</div>
+        <div className="text-center text-stone-400 py-6 text-sm">{t('common.loading', language)}</div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {comments.map((comment) => (
-            <div key={comment.id} className="flex gap-4">
+            <div key={comment.id} className="flex gap-3.5">
               <div className="flex-shrink-0">
                 {comment.user?.profilePhotoUrl ? (
-                  <img src={comment.user.profilePhotoUrl} alt="" className="w-10 h-10 rounded-full object-cover" />
+                  <img src={comment.user.profilePhotoUrl} alt="" className="w-10 h-10 rounded-full object-cover border border-brass/25" onError={(e) => { e.currentTarget.src = '/logo.png'; e.currentTarget.onerror = null; }} />
                 ) : (
-                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xl">👤</div>
+                  <div className="w-10 h-10 rounded-full bg-stone-900 border border-brass/30 flex items-center justify-center text-lg">👤</div>
                 )}
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg flex-grow">
+              <div className="bg-stone-900/80 border border-brass/20 p-4 rounded-xl flex-grow">
                 <div className="flex justify-between items-start mb-2">
-                  <span className="font-bold text-dark">{comment.user?.name}</span>
-                  <span className="text-xs text-gray-500">
+                  <span className="font-semibold text-stone-200 text-sm">{comment.user?.name}</span>
+                  <span className="text-xs text-stone-400 font-mono">
                     {new Date(comment.createdAt).toLocaleDateString()}
                   </span>
                 </div>
-                <p className="text-gray-700 whitespace-pre-wrap">{comment.content}</p>
+                <p className="text-stone-300 whitespace-pre-wrap text-sm leading-relaxed">{comment.content}</p>
               </div>
             </div>
           ))}
           {comments.length === 0 && (
-            <p className="text-center text-gray-500 italic">
+            <p className="text-center text-stone-400 italic text-sm py-4">
               {language === 'ta' ? 'முதல் கருத்தை பதிவு செய்யுங்கள்!' : 'Be the first to comment!'}
             </p>
           )}

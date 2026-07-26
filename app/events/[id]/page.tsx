@@ -102,68 +102,68 @@ export default function EventDetailPage() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-ivory py-12">
+      <main className="min-h-screen bg-stone-900 py-24 text-stone-100">
         <div className="container-custom max-w-4xl">
           {/* Breadcrumb */}
-          <div className="mb-6 text-sm text-sacred-ash/50 font-sans font-semibold">
-            <Link href="/events" className="hover:text-saffron transition-colors">
+          <div className="mb-8 text-xs text-stone-400 font-sans font-semibold uppercase tracking-[0.18em]">
+            <Link href="/events" className="hover:text-brass-300 transition-colors">
               {t('event.title', language)}
             </Link>
-            <span className="mx-2">→</span>
-            <span className="text-sacred-ash">{displayTitle}</span>
+            <span className="mx-2 text-brass-400">/</span>
+            <span className="text-stone-200">{displayTitle}</span>
           </div>
 
-          <div className="card-temple p-0 overflow-hidden border-none shadow-golden-lg">
+          <div className="card-temple p-0 overflow-hidden border border-brass/25 bg-stone-800 shadow-golden">
             {event.imageUrl && (
-              <img src={event.imageUrl} alt={displayTitle} className="w-full h-80 object-cover" />
+              <img src={event.imageUrl} alt={displayTitle} className="w-full h-96 object-cover border-b border-brass/20" onError={(e) => { e.currentTarget.src = '/hero_premium.png'; e.currentTarget.onerror = null; }} />
             )}
             
-            <div className="p-8">
-              <h1 className="text-4xl font-bold mb-6">{displayTitle}</h1>
+            <div className="p-8 md:p-10">
+              <h1 className="text-3xl md:text-5xl font-serif font-semibold text-stone-100 mb-6 tracking-tight">{displayTitle}</h1>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-ivory-warm p-6 rounded-2xl border border-gold/10">
-                <div className="flex items-center gap-3 text-sacred-ash/70">
-                  <Calendar className="w-5 h-5 text-saffron flex-shrink-0" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8 bg-stone-900/80 p-6 rounded-2xl border border-brass/25 shadow-inner">
+                <div className="flex items-center gap-3.5 text-stone-300">
+                  <Calendar className="w-5 h-5 text-brass-400 flex-shrink-0" />
                   <div>
-                    <p className="font-bold">{displayDate}</p>
-                    {event.time && <p className="text-sm text-gray-500">{event.time}</p>}
+                    <p className="font-semibold text-stone-100">{displayDate}</p>
+                    {event.time && <p className="text-xs uppercase tracking-[0.15em] text-brass-400 mt-0.5">{event.time}</p>}
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-sacred-ash/70">
-                  <MapPin className="w-5 h-5 text-saffron flex-shrink-0" />
+                <div className="flex items-center gap-3.5 text-stone-300">
+                  <MapPin className="w-5 h-5 text-brass-400 flex-shrink-0" />
                   <div>
-                    <p className="font-bold">{event.location}</p>
+                    <p className="font-semibold text-stone-100">{event.location}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-sacred-ash/70">
-                  <Users className="w-5 h-5 text-saffron flex-shrink-0" />
+                <div className="flex items-center gap-3.5 text-stone-300">
+                  <Users className="w-5 h-5 text-brass-400 flex-shrink-0" />
                   <div>
-                    <p className="font-bold">{event._count?.rsvps || 0} {language === 'ta' ? 'பேர் கலந்துகொள்கின்றனர்' : 'attending'}</p>
+                    <p className="font-semibold text-stone-100">{event._count?.rsvps || 0} {language === 'ta' ? 'பேர் கலந்துகொள்கின்றனர்' : 'attending'}</p>
                   </div>
                 </div>
                 {event.capacity && (
-                  <div className="flex items-center gap-3 text-sacred-ash/70">
-                    <Ticket className="w-5 h-5 text-saffron flex-shrink-0" />
+                  <div className="flex items-center gap-3.5 text-stone-300">
+                    <Ticket className="w-5 h-5 text-brass-400 flex-shrink-0" />
                     <div>
-                      <p className="font-bold">{event.capacity} {language === 'ta' ? 'அதிகபட்ச இடம்' : 'capacity'}</p>
+                      <p className="font-semibold text-stone-100">{event.capacity} {language === 'ta' ? 'அதிகபட்ச இடம்' : 'capacity'}</p>
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="prose-temple max-w-none mb-8 whitespace-pre-wrap text-lg leading-relaxed">
+              <div className="text-stone-300 max-w-none mb-10 whitespace-pre-wrap text-base md:text-lg leading-relaxed space-y-4">
                 {displayDescription}
               </div>
 
-              <div className="border-t border-gold/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div className="text-sacred-ash/50 flex items-center gap-2 text-sm font-sans">
-                  <PenLine className="w-4 h-4" /> {language === 'ta' ? 'உருவாக்கியவர்' : 'Created by'} <span className="font-bold text-sacred-ash">{event.creator?.name || 'Admin'}</span>
+              <div className="border-t border-brass/20 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="text-stone-400 flex items-center gap-2 text-xs uppercase tracking-[0.15em]">
+                  <PenLine className="w-4 h-4 text-brass-400" /> {language === 'ta' ? 'உருவாக்கியவர்' : 'Created by'} <span className="font-semibold text-stone-200">{event.creator?.name || 'Admin'}</span>
                 </div>
                 <div className="flex gap-4">
                   {user && (user.role === 'ADMIN' || user.id === event.createdBy) && (
                     <button 
                       onClick={() => router.push(`/events/${event.id}/edit`)}
-                      className="px-6 py-2 border border-gray-300 rounded-xl hover:bg-gray-50 transition font-medium"
+                      className="px-6 py-2.5 border border-brass/30 bg-stone-900 text-stone-200 rounded-xl hover:bg-stone-950 hover:border-brass-400 transition text-xs font-semibold uppercase tracking-[0.15em]"
                     >
                       {t('common.edit', language)}
                     </button>

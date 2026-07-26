@@ -14,10 +14,10 @@ export default function AdminDashboard() {
   
   // Mock Stats
   const stats = [
-    { label: language === 'ta' ? 'மொத்த உறுப்பினர்கள்' : 'Total Members', value: '15', icon: <Users className="w-6 h-6" />, color: 'bg-blue-50 text-blue-700' },
-    { label: language === 'ta' ? 'வரவிருக்கும் நிகழ்வுகள்' : 'Upcoming Events', value: '4', icon: <Calendar className="w-6 h-6" />, color: 'bg-gold/10 text-gold-dark' },
-    { label: language === 'ta' ? 'அறிவிப்புகள்' : 'Announcements', value: '8', icon: <Megaphone className="w-6 h-6" />, color: 'bg-green-50 text-green-700' },
-    { label: language === 'ta' ? 'கேலரி படங்கள்' : 'Gallery Photos', value: '24', icon: <Image className="w-6 h-6" />, color: 'bg-purple-50 text-purple-700' },
+    { label: language === 'ta' ? 'மொத்த உறுப்பினர்கள்' : 'Total Members', value: '15', icon: <Users className="w-6 h-6" />, color: 'bg-stone-900 text-brass-400 border border-brass/30' },
+    { label: language === 'ta' ? 'வரவிருக்கும் நிகழ்வுகள்' : 'Upcoming Events', value: '4', icon: <Calendar className="w-6 h-6" />, color: 'bg-stone-900 text-stone-200 border border-brass/30' },
+    { label: language === 'ta' ? 'அறிவிப்புகள்' : 'Announcements', value: '8', icon: <Megaphone className="w-6 h-6" />, color: 'bg-stone-900 text-brass-300 border border-brass/30' },
+    { label: language === 'ta' ? 'கேலரி படங்கள்' : 'Gallery Photos', value: '24', icon: <Image className="w-6 h-6" />, color: 'bg-stone-900 text-stone-300 border border-brass/30' },
   ]
 
   const recentActivity = [
@@ -29,23 +29,25 @@ export default function AdminDashboard() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-[#f8fafc] py-12">
-        <div className="container-custom">
+      <main className="min-h-screen bg-stone-900 text-stone-100 py-32 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 50% 30%, rgba(176,138,79,0.25) 0%, transparent 60%)' }} />
+        <div className="container-custom relative z-10">
           {/* Admin Header */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4 pb-8 border-b border-brass/20">
             <div>
-              <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">
+              <span className="section-label-gold mb-2 inline-block">Temple Administration</span>
+              <h1 className="text-3xl md:text-5xl font-serif font-semibold text-stone-100 tracking-tight">
                 {language === 'ta' ? 'நிர்வாக குழு' : 'Admin Dashboard'}
               </h1>
-              <p className="text-slate-500 font-medium mt-1">
+              <p className="text-stone-400 text-sm md:text-base mt-2">
                 {language === 'ta' ? 'கணினி மேலாண்மை மற்றும் சமூக கண்காணிப்பு' : 'Manage temple activities and community members.'}
               </p>
             </div>
             <div className="flex gap-3">
-              <Link href="/events/create" className="px-5 py-2.5 bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-100 hover:bg-red-800 transition-all active:scale-95">
+              <Link href="/events/create" className="px-5 py-3 bg-stone-800 border border-brass/40 text-brass-300 font-mono font-semibold text-xs uppercase tracking-wider rounded-xl shadow-golden hover:bg-stone-700 hover:border-brass-400 transition-all active:scale-95">
                 + {language === 'ta' ? 'நிகழ்வு சேர்' : 'Add Event'}
               </Link>
-              <Link href="/announcements/create" className="px-5 py-2.5 bg-slate-900 text-white font-bold rounded-xl shadow-lg shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95">
+              <Link href="/announcements/create" className="px-5 py-3 bg-stone-800 border border-brass/25 text-stone-200 font-mono font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-stone-700 hover:border-brass/40 transition-all active:scale-95">
                 + {language === 'ta' ? 'அறிவிப்பு' : 'Announcement'}
               </Link>
             </div>
@@ -54,13 +56,13 @@ export default function AdminDashboard() {
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {stats.map((stat, i) => (
-              <div key={i} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-5">
-                <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl shadow-inner`}>
+              <div key={i} className="bg-stone-800 p-6 rounded-2xl shadow-golden border border-brass/25 flex items-center gap-5">
+                <div className={`w-14 h-14 rounded-xl ${stat.color} flex items-center justify-center text-2xl shadow-inner shrink-0`}>
                   {stat.icon}
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
-                  <p className="text-3xl font-black text-slate-900">{stat.value}</p>
+                  <p className="text-xs font-mono font-semibold text-stone-400 uppercase tracking-wider">{stat.label}</p>
+                  <p className="text-3xl font-serif font-semibold text-stone-100 mt-1">{stat.value}</p>
                 </div>
               </div>
             ))}
@@ -69,56 +71,56 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Quick Management Sections */}
             <div className="lg:col-span-2 space-y-8">
-              <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-                <div className="p-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
-                  <h2 className="text-xl font-bold text-slate-900">
+              <div className="bg-stone-800 rounded-3xl shadow-golden border border-brass/25 overflow-hidden">
+                <div className="p-6 border-b border-brass/20 flex justify-between items-center bg-stone-900/50">
+                  <h2 className="text-xl font-serif font-semibold text-stone-100">
                     {language === 'ta' ? 'விரைவான மேலாண்மை' : 'Quick Management'}
                   </h2>
                 </div>
                 <div className="p-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <Link href="/admin/members" className="group p-6 rounded-2xl border border-slate-100 hover:border-blue-200 hover:bg-blue-50/30 transition-all">
+                  <Link href="/admin/members" className="group p-6 rounded-2xl border border-brass/20 bg-stone-900/40 hover:border-brass-400/50 hover:bg-stone-800 hover:shadow-golden transition-all duration-500">
                     <div className="mb-3 group-hover:scale-110 transition-transform">
-                      <Users className="w-8 h-8 text-blue-600" strokeWidth={1.5} />
+                      <Users className="w-8 h-8 text-brass-400" strokeWidth={1.5} />
                     </div>
-                    <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'உறுப்பினர்கள்' : 'Manage Members'}</h3>
-                    <p className="text-sm text-slate-500">View and manage community member profiles.</p>
+                    <h3 className="font-serif font-semibold text-lg text-stone-100 group-hover:text-brass-300 transition-colors mb-1">{language === 'ta' ? 'உறுப்பினர்கள்' : 'Manage Members'}</h3>
+                    <p className="text-sm text-stone-400 leading-relaxed">View and manage community member profiles.</p>
                   </Link>
-                  <Link href="/events" className="group p-6 rounded-2xl border border-slate-100 hover:border-gold/30 hover:bg-gold/5 transition-all">
+                  <Link href="/events" className="group p-6 rounded-2xl border border-brass/20 bg-stone-900/40 hover:border-brass-400/50 hover:bg-stone-800 hover:shadow-golden transition-all duration-500">
                     <div className="mb-3 group-hover:scale-110 transition-transform">
-                      <Calendar className="w-8 h-8 text-gold-dark" strokeWidth={1.5} />
+                      <Calendar className="w-8 h-8 text-stone-300 group-hover:text-brass-300 transition-colors" strokeWidth={1.5} />
                     </div>
-                    <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'நிகழ்வுகள்' : 'Manage Events'}</h3>
-                    <p className="text-sm text-slate-500">Update the festival calendar and special poojas.</p>
+                    <h3 className="font-serif font-semibold text-lg text-stone-100 group-hover:text-brass-300 transition-colors mb-1">{language === 'ta' ? 'நிகழ்வுகள்' : 'Manage Events'}</h3>
+                    <p className="text-sm text-stone-400 leading-relaxed">Update the festival calendar and special poojas.</p>
                   </Link>
-                  <Link href="/admin/gallery" className="group p-6 rounded-2xl border border-slate-100 hover:border-purple-200 hover:bg-purple-50/30 transition-all">
+                  <Link href="/admin/gallery" className="group p-6 rounded-2xl border border-brass/20 bg-stone-900/40 hover:border-brass-400/50 hover:bg-stone-800 hover:shadow-golden transition-all duration-500">
                     <div className="mb-3 group-hover:scale-110 transition-transform">
-                      <Image className="w-8 h-8 text-purple-600" strokeWidth={1.5} />
+                      <Image className="w-8 h-8 text-brass-400" strokeWidth={1.5} />
                     </div>
-                    <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'கேலரி' : 'Manage Gallery'}</h3>
-                    <p className="text-sm text-slate-500">Upload and organize temple photos and videos.</p>
+                    <h3 className="font-serif font-semibold text-lg text-stone-100 group-hover:text-brass-300 transition-colors mb-1">{language === 'ta' ? 'கேலரி' : 'Manage Gallery'}</h3>
+                    <p className="text-sm text-stone-400 leading-relaxed">Upload and organize temple photos and videos.</p>
                   </Link>
-                  <Link href="/about" className="group p-6 rounded-2xl border border-slate-100 hover:border-green-200 hover:bg-green-50/30 transition-all">
+                  <Link href="/about" className="group p-6 rounded-2xl border border-brass/20 bg-stone-900/40 hover:border-brass-400/50 hover:bg-stone-800 hover:shadow-golden transition-all duration-500">
                     <div className="mb-3 group-hover:scale-110 transition-transform">
-                      <Building2 className="w-8 h-8 text-green-600" strokeWidth={1.5} />
+                      <Building2 className="w-8 h-8 text-stone-300 group-hover:text-brass-300 transition-colors" strokeWidth={1.5} />
                     </div>
-                    <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'கோவில் தகவல்' : 'Temple Information'}</h3>
-                    <p className="text-sm text-slate-500">Update temple history, location, and contact details.</p>
+                    <h3 className="font-serif font-semibold text-lg text-stone-100 group-hover:text-brass-300 transition-colors mb-1">{language === 'ta' ? 'கோவில் தகவல்' : 'Temple Information'}</h3>
+                    <p className="text-sm text-stone-400 leading-relaxed">Update temple history, location, and contact details.</p>
                   </Link>
-                  <Link href="/admin/analytics" className="group p-6 rounded-2xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all md:col-span-2 lg:col-span-1">
+                  <Link href="/admin/analytics" className="group p-6 rounded-2xl border border-brass/20 bg-stone-900/40 hover:border-brass-400/50 hover:bg-stone-800 hover:shadow-golden transition-all duration-500 md:col-span-2 lg:col-span-1">
                     <div className="mb-3 group-hover:scale-110 transition-transform">
-                      <BarChart3 className="w-8 h-8 text-indigo-600" strokeWidth={1.5} />
+                      <BarChart3 className="w-8 h-8 text-brass-400" strokeWidth={1.5} />
                     </div>
-                    <h3 className="font-bold text-slate-900 mb-1">{language === 'ta' ? 'பகுப்பாய்வு' : 'Analytics & Data'}</h3>
-                    <p className="text-sm text-slate-500">View revenue reports, activities, and metrics.</p>
+                    <h3 className="font-serif font-semibold text-lg text-stone-100 group-hover:text-brass-300 transition-colors mb-1">{language === 'ta' ? 'பகுப்பாய்வு' : 'Analytics & Data'}</h3>
+                    <p className="text-sm text-stone-400 leading-relaxed">View revenue reports, activities, and metrics.</p>
                   </Link>
                 </div>
               </div>
             </div>
 
             {/* Recent Activity Sidebar */}
-            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden h-fit">
-              <div className="p-6 border-b border-slate-50 bg-slate-50/50">
-                <h2 className="text-xl font-bold text-slate-900">
+            <div className="bg-stone-800 rounded-3xl shadow-golden border border-brass/25 overflow-hidden h-fit">
+              <div className="p-6 border-b border-brass/20 bg-stone-900/50">
+                <h2 className="text-xl font-serif font-semibold text-stone-100">
                   {language === 'ta' ? 'சமீபத்திய நடவடிக்கை' : 'Recent Activity'}
                 </h2>
               </div>
@@ -126,15 +128,15 @@ export default function AdminDashboard() {
                 <div className="space-y-6">
                   {recentActivity.map((item) => (
                     <div key={item.id} className="flex gap-4 items-start">
-                      <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 rounded-full bg-brass-400 mt-1.5 shrink-0"></div>
                       <div>
-                        <p className="text-sm font-bold text-slate-900">{item.action}</p>
-                        <p className="text-xs text-slate-400 font-medium">by <span className="text-slate-600 font-bold">{item.user}</span> • {item.time}</p>
+                        <p className="text-sm font-semibold text-stone-200">{item.action}</p>
+                        <p className="text-xs text-stone-400 font-mono uppercase tracking-wider mt-0.5">by <span className="text-brass-300 font-semibold">{item.user}</span> • {item.time}</p>
                       </div>
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-8 py-3 text-sm font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 rounded-xl transition-all">
+                <button className="w-full mt-8 py-3 text-xs font-mono uppercase tracking-wider font-semibold text-stone-400 hover:text-stone-100 hover:bg-stone-900/50 rounded-xl transition-all">
                   {language === 'ta' ? 'அனைத்தையும் காண்க' : 'View All Activity'}
                 </button>
               </div>

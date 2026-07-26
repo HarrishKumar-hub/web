@@ -26,7 +26,7 @@ const MOCK_MEDIA = [
     fileUrl: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1200',
     thumbnailUrl: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400',
     category: 'EVENT',
-    description: 'Bhakthas gathering for the sacred Aadi Perukku.'
+    description: 'Devotees gathered for the annual Aadi Perukku poojai.'
   },
   {
     id: '3',
@@ -36,7 +36,7 @@ const MOCK_MEDIA = [
     fileUrl: 'https://images.unsplash.com/photo-1621213204918-05b18aa124b8?auto=format&fit=crop&q=80&w=1200',
     thumbnailUrl: 'https://images.unsplash.com/photo-1621213204918-05b18aa124b8?auto=format&fit=crop&q=80&w=400',
     category: 'CEREMONY',
-    description: 'A moment of divine light during the evening pooja.'
+    description: 'Evening Deepa Aradhanai ceremony.'
   },
   {
     id: '4',
@@ -79,26 +79,28 @@ export default function GalleryPage() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-ivory py-20">
-        <div className="container-custom">
+      <main className="min-h-screen bg-stone-900 py-32 text-stone-100 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 50% 30%, rgba(176,138,79,0.25) 0%, transparent 60%)' }} />
+        <div className="container-custom relative z-10">
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-gold-dark mb-6 tracking-tight">
+            <span className="section-label-gold mb-4 inline-block">{language === 'ta' ? 'கோவில் புகைப்படங்கள்' : 'Temple Gallery'}</span>
+            <h1 className="text-4xl md:text-6xl font-serif font-semibold text-stone-100 mb-6 tracking-tight">
               {t('nav.gallery', language)}
             </h1>
-            <p className="text-xl text-sacred-ash/60 font-lora italic italic">
-              {language === 'ta' ? 'எங்கள் நிகழ்வுகள் மற்றும் விழாக்களின் தருணங்கள்' : 'Glimpses of sacred moments from our rituals and community gatherings'}
+            <p className="text-base md:text-lg text-stone-300 max-w-2xl mx-auto leading-relaxed">
+              {language === 'ta' ? 'கோவில் திருவிழாக்கள், விசேஷ பூஜைகள் மற்றும் சமூக நிகழ்வுகளின் புகைப்படங்கள்.' : 'Photographs of temple festivals, special poojas, and village celebrations.'}
             </p>
           </div>
 
-          <div className="flex justify-center flex-wrap gap-4 mb-16 bg-ivory-warm p-1.5 rounded-full border border-gold/15 max-w-fit mx-auto shadow-ivory">
+          <div className="flex justify-center flex-wrap gap-2 mb-14 bg-stone-800 p-1.5 rounded-xl border border-brass/25 max-w-fit mx-auto shadow-golden">
             {['', 'EVENT', 'CEREMONY', 'OTHER'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategoryFilter(cat)}
-                className={`px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                className={`px-6 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-300 ${
                   categoryFilter === cat
-                    ? 'bg-maroon text-ivory shadow-temple'
-                    : 'text-sacred-ash/50 hover:text-gold-dark'
+                    ? 'bg-stone-900 text-brass-300 border border-brass/40 shadow-sm'
+                    : 'text-stone-400 hover:text-stone-200'
                 }`}
               >
                 {cat === '' ? (language === 'ta' ? 'அனைத்தும்' : 'All') : (
@@ -112,10 +114,10 @@ export default function GalleryPage() {
 
           <MediaGrid mediaFiles={media} language={language} />
           
-          <div className="mt-20 text-center text-sacred-ash/40 font-lora italic border-t border-gold/10 pt-10">
+          <div className="mt-20 text-center text-stone-400 font-sans text-sm border-t border-brass/20 pt-10">
             {language === 'ta' 
-              ? 'மேலும் படங்கள் விரைவில் சேர்க்கப்படும்...' 
-              : 'Divine captures will be appended as rituals unfold...'}
+              ? 'மேலும் கோவில் புகைப்படங்கள் மற்றும் வீடியோக்கள் விரைவில் பதிவேற்றப்படும்.' 
+              : 'More photographs of temple festivals and poojas will be updated soon.'}
           </div>
         </div>
       </main>

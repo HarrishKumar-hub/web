@@ -42,44 +42,43 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fcf8f1] flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-stone-900 flex flex-col items-center justify-center p-4 relative overflow-hidden text-stone-100">
       {/* Decorative Background Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-100 rounded-full blur-[100px] opacity-50"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-100 rounded-full blur-[100px] opacity-50"></div>
+      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 50% 30%, rgba(176,138,79,0.25) 0%, transparent 60%)' }} />
 
       <div className="w-full max-w-lg z-10 transition-all duration-500">
-        <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-orange-50">
+        <div className="bg-stone-800 rounded-3xl shadow-golden p-8 md:p-12 border border-brass/25">
           <div className="text-center mb-10">
-            <div className="inline-flex p-4 bg-saffron/10 rounded-2xl mb-4">
-              <Flame className="w-10 h-10 text-saffron animate-lamp-flicker" />
+            <div className="inline-flex p-4 bg-stone-900 border border-brass/30 rounded-2xl mb-5 shadow-inner">
+              <Flame className="w-10 h-10 text-brass-400 animate-pulse" />
             </div>
-            <h1 className="text-3xl font-extrabold text-dark tracking-tight mb-2">
+            <h1 className="text-3xl font-serif font-semibold text-stone-100 tracking-tight mb-2">
               {t('auth.login', language)}
             </h1>
-            <p className="text-gray-500 font-medium">
+            <p className="text-stone-400 text-sm md:text-base">
               {language === 'ta'
                 ? 'உங்கள் கணக்கில் உள்நுழையவும்'
                 : 'Welcome back to our community'}
             </p>
           </div>
 
-          <div className="flex bg-gray-50 p-1 rounded-xl mb-8 border border-gray-100">
+          <div className="flex bg-stone-900 p-1 rounded-xl mb-8 border border-brass/25">
             <button
               onClick={() => setLanguage('en')}
-              className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${
+              className={`flex-1 py-2 text-xs font-mono font-semibold uppercase tracking-wider rounded-lg transition-all duration-300 ${
                 language === 'en'
-                  ? 'bg-white text-orange-700 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-stone-800 text-brass-300 border border-brass/30 shadow-sm'
+                  : 'text-stone-400 hover:text-stone-200'
               }`}
             >
               English
             </button>
             <button
               onClick={() => setLanguage('ta')}
-              className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${
+              className={`flex-1 py-2 text-xs font-mono font-semibold uppercase tracking-wider rounded-lg transition-all duration-300 ${
                 language === 'ta'
-                  ? 'bg-white text-orange-700 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-stone-800 text-brass-300 border border-brass/30 shadow-sm'
+                  : 'text-stone-400 hover:text-stone-200'
               }`}
             >
               தமிழ்
@@ -87,14 +86,14 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-r-lg mb-6 text-sm">
-              <span className="font-bold">Error:</span> {error}
+            <div className="bg-red-950/40 border-l-4 border-red-500 text-red-300 px-4 py-3 rounded-r-lg mb-6 text-sm border border-red-500/20">
+              <span className="font-semibold block mb-0.5 uppercase tracking-wider text-xs">Error</span> {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-xs uppercase tracking-[0.15em] font-semibold text-stone-300 mb-2">
                 {t('auth.email', language)}
               </label>
               <input
@@ -103,17 +102,17 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-dark md:text-lg"
+                className="w-full px-4 py-3.5 bg-stone-900 border border-brass/30 rounded-xl focus:outline-none focus:border-brass-400 transition-all text-stone-100 placeholder-stone-500 text-sm md:text-base"
                 placeholder="name@example.com"
               />
             </div>
 
             <div>
-              <div className="flex justify-between mb-2">
-                <label className="block text-sm font-bold text-gray-700">
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-xs uppercase tracking-[0.15em] font-semibold text-stone-300">
                   {t('auth.password', language)}
                 </label>
-                <Link href="#" className="text-xs font-bold text-orange-700 hover:text-orange-800 transition-colors">
+                <Link href="#" className="text-xs font-mono uppercase tracking-wider text-brass-400 hover:text-brass-300 transition-colors">
                   {language === 'ta' ? 'கடவுச்சொல்லை மறந்தீர்களா?' : 'Forgot password?'}
                 </Link>
               </div>
@@ -123,7 +122,7 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-dark md:text-lg"
+                className="w-full px-4 py-3.5 bg-stone-900 border border-brass/30 rounded-xl focus:outline-none focus:border-brass-400 transition-all text-stone-100 placeholder-stone-500 text-sm md:text-base"
                 placeholder="••••••••"
               />
             </div>
@@ -131,11 +130,11 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-4 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-2xl font-extrabold text-lg shadow-lg hover:shadow-orange-200 hover:-translate-y-1 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-premium w-full mt-6 py-4 flex items-center justify-center gap-2 text-xs uppercase tracking-[0.15em] font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-4 w-4 text-stone-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -146,11 +145,11 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-10 text-center">
-            <p className="text-gray-500 font-medium">
+            <p className="text-stone-400 text-sm">
               {t('auth.noAccount', language)}{' '}
               <Link
                 href="/register"
-                className="text-orange-700 font-extrabold hover:text-orange-800 border-b-2 border-orange-200 pb-0.5 ml-1 transition-all"
+                className="text-brass-300 font-semibold hover:text-brass-200 border-b border-brass-400/40 pb-0.5 ml-1 transition-all"
               >
                 {t('auth.signUp', language)}
               </Link>
@@ -159,8 +158,8 @@ export default function LoginPage() {
         </div>
 
         <div className="text-center mt-12">
-          <Link href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-orange-700 font-bold transition-all">
-            <span className="text-xl">←</span> {t('common.back', language)}
+          <Link href="/" className="inline-flex items-center gap-2 text-stone-400 hover:text-stone-200 font-semibold uppercase text-xs tracking-[0.15em] transition-all">
+            <span className="text-lg leading-none mb-0.5">←</span> {t('common.back', language)}
           </Link>
         </div>
       </div>

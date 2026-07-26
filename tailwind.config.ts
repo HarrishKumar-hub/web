@@ -10,70 +10,108 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core Gold Palette
-        gold: {
-          pale:     '#FDF6E3',
-          light:    '#F4CE6A',
-          DEFAULT:  '#D4AF37',
-          dark:     '#996515',
-          metallic: '#C5A028',
+        // Core Temple Design System Palette
+        stone: {
+          950: '#12100D',
+          900: '#181612', // Base stone (#181612)
+          800: '#23201A', // Surface (#23201A)
+          700: '#2D291F', // Elevated Surface (#2D291F)
+          600: '#3F392C',
+          500: '#544D3C',
+          400: '#756D58',
+          300: '#9E947A',
+          200: '#C8B79A', // Secondary Text (#C8B79A)
+          100: '#F3EBDD', // Primary Text / Sand (#F3EBDD)
+          50:  '#FCFAF6',
         },
-        // Saffron — primary CTA & highlight colour
-        saffron: {
-          light:   '#F5A761',
-          DEFAULT: '#E8722A',
-          dark:    '#C25A18',
+        surface: {
+          DEFAULT: '#23201A',
+          elevated: '#2D291F',
+          base: '#181612',
+          border: 'rgba(243, 235, 221, 0.10)',
         },
-        // Maroon — footer, accents, borders
-        maroon: {
-          light:   '#A3303030',
-          DEFAULT: '#7B1C1C',
-          dark:    '#4A0E0E',
-          deep:    '#1E0505',
+        brass: {
+          100: '#F5E6C8',
+          200: '#E6C98E',
+          300: '#D2B060', // Hover accent
+          400: '#B08A4F', // Primary Accent (#B08A4F)
+          500: '#8C6B35', // Active accent
+          600: '#6E5229',
+          DEFAULT: '#B08A4F',
         },
-        // Ivory — warm page backgrounds
-        ivory: {
-          DEFAULT: '#FAF7F0',
-          warm:    '#F5EFE0',
-          cream:   '#EDE4CC',
-        },
-        // Sacred text neutrals
         sacred: {
-          smoke: '#6B5744',
-          ash:   '#3D2B1F',
-          deep:  '#1A0E08',
+          100: '#F7D3BA',
+          200: '#E8A374',
+          300: '#D98448',
+          400: '#C46A2B', // Sacred Accent (#C46A2B)
+          500: '#99501E',
+          600: '#733B14',
+          DEFAULT: '#C46A2B',
+          smoke: '#9E947A',
+          ash: '#181612',
+          deep: '#12100D',
         },
-        // Indigo — contrast sections
+        temple: {
+          red: '#7A2E21', // Temple Red (#7A2E21)
+          success: '#66735C', // Success (#66735C)
+          divider: 'rgba(243, 235, 221, 0.10)',
+        },
+        // Legacy aliases retained for backwards compatibility during transition
+        gold: {
+          pale:     '#F3EBDD',
+          light:    '#D2B060',
+          DEFAULT:  '#B08A4F',
+          dark:     '#B08A4F',
+          metallic: '#8C6B35',
+        },
+        saffron: {
+          light:   '#D98448',
+          DEFAULT: '#C46A2B',
+          dark:    '#99501E',
+          glow:    '#C46A2B',
+        },
+        maroon: {
+          light:   'rgba(122, 46, 33, 0.20)',
+          DEFAULT: '#7A2E21',
+          dark:    '#5C2218',
+          deep:    '#3B140E',
+        },
+        ivory: {
+          DEFAULT: '#F3EBDD',
+          warm:    '#EADDC7',
+          cream:   '#DFCEB2',
+        },
         indigo: {
-          light:   '#7B6FA3',
-          DEFAULT: '#3D3268',
-          dark:    '#1a0a2e',
+          light:   '#756D58',
+          DEFAULT: '#2D291F',
+          dark:    '#181612',
         },
-        // Legacy white compatibility
         white: '#FFFFFF',
         premium: {
-          bg:     '#FAF7F0',
-          accent: '#D4AF37',
-          text:   '#996515',
+          bg:     '#181612',
+          accent: '#B08A4F',
+          text:   '#F3EBDD',
         },
       },
       fontFamily: {
-        serif:  ['var(--font-cinzel)', 'var(--font-lora)', 'serif'],
-        lora:   ['var(--font-lora)', 'serif'],
-        sans:   ['var(--font-dm-sans)', 'var(--font-sans)', 'sans-serif'],
+        serif:  ['var(--font-cormorant)', 'var(--font-tamil)', 'Georgia', 'serif'],
+        lora:   ['var(--font-cormorant)', 'var(--font-tamil)', 'Georgia', 'serif'],
+        sans:   ['var(--font-inter)', 'var(--font-tamil)', 'system-ui', 'sans-serif'],
+        tamil:  ['var(--font-tamil)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'golden':    '0 20px 50px -15px rgba(212, 175, 55, 0.18)',
-        'golden-lg': '0 30px 80px -20px rgba(153, 101, 21, 0.22)',
-        'temple':    '0 25px 60px -10px rgba(123, 28, 28, 0.18)',
-        'flame':     '0 15px 40px -10px rgba(232, 114, 42, 0.35)',
-        'ivory':     '0 8px 30px -8px rgba(61, 43, 31, 0.08)',
+        'golden':    '0 16px 38px -18px rgba(176, 138, 79, 0.22)',
+        'golden-lg': '0 28px 64px -24px rgba(176, 138, 79, 0.28)',
+        'temple':    '0 20px 48px -18px rgba(0, 0, 0, 0.55)',
+        'flame':     '0 12px 32px -14px rgba(196, 106, 43, 0.28)',
+        'plaque':    '0 14px 32px -12px rgba(0, 0, 0, 0.65)',
       },
       backgroundImage: {
-        'temple-footer': 'linear-gradient(160deg, #4A0E0E 0%, #7B1C1C 40%, #1a0a2e 100%)',
-        'gold-shine':    'linear-gradient(135deg, #996515 0%, #D4AF37 25%, #F4CE6A 50%, #D4AF37 75%, #996515 100%)',
-        'saffron-glow':  'linear-gradient(135deg, #C25A18 0%, #E8722A 50%, #F5A761 100%)',
-        'ivory-fade':    'linear-gradient(180deg, #FAF7F0 0%, #F5EFE0 100%)',
+        'temple-footer': 'linear-gradient(180deg, #181612 0%, #23201A 100%)',
+        'gold-shine':    'linear-gradient(135deg, #8C6B35 0%, #B08A4F 35%, #D2B060 55%, #B08A4F 80%, #8C6B35 100%)',
+        'saffron-glow':  'linear-gradient(135deg, #7A2E21 0%, #C46A2B 50%, #D2B060 100%)',
+        'stone-panel':   'linear-gradient(180deg, #23201A 0%, #181612 100%)',
+        'ivory-fade':    'linear-gradient(180deg, #23201A 0%, #181612 100%)',
       },
       animation: {
         'divine-flicker': 'flicker 3s infinite ease-in-out',
@@ -101,8 +139,8 @@ const config: Config = {
         },
       },
       letterSpacing: {
-        'sacred': '0.5em',
-        'divine': '0.3em',
+        'sacred': '0.35em',
+        'divine': '0.25em',
       },
     },
   },

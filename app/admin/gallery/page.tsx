@@ -48,7 +48,7 @@ export default function AdminGalleryPage() {
       const res = await fetch('/api/upload', {
         method: 'POST',
         headers: {
-          'Authorization': \`Bearer \${token}\`
+          'Authorization': `Bearer ${token}`
         },
         body: formData
       })
@@ -75,63 +75,65 @@ export default function AdminGalleryPage() {
   return (
     <>
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
-      <main className="min-h-screen bg-ivory py-16">
-        <div className="container-custom">
+      <main className="min-h-screen bg-stone-900 text-stone-100 py-32 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 50% 30%, rgba(176,138,79,0.25) 0%, transparent 60%)' }} />
+        <div className="container-custom relative z-10">
           {/* Breadcrumb */}
-          <div className="mb-10 text-sm text-sacred-ash/50 font-sans font-bold uppercase tracking-widest flex items-center gap-2">
-            <Link href="/admin" className="hover:text-saffron transition-colors flex items-center gap-1.5">
-              <LayoutGrid className="w-3.5 h-3.5" />
+          <div className="mb-10 text-xs font-mono font-semibold uppercase tracking-widest text-stone-400 flex items-center gap-2">
+            <Link href="/admin" className="hover:text-brass-300 transition-colors flex items-center gap-1.5">
+              <LayoutGrid className="w-3.5 h-3.5 text-brass-400" />
               Admin
             </Link>
-            <span className="opacity-30">/</span>
-            <span className="text-sacred-ash">Media Content</span>
+            <span className="text-brass-400/40">/</span>
+            <span className="text-stone-200">Media Content</span>
           </div>
 
-          <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-gold-dark tracking-tight mb-4 leading-tight">Sacred Gallery</h1>
-            <p className="text-sacred-ash/60 font-medium max-w-2xl font-lora">Communicate the temple's divine glory by uploading sacred moments to the global community gallery.</p>
+          <div className="mb-12 pb-8 border-b border-brass/20">
+            <span className="section-label-gold mb-2 inline-block">Sanctuary Archives</span>
+            <h1 className="text-3xl md:text-5xl font-serif font-semibold text-stone-100 tracking-tight mb-3">Sacred Gallery Management</h1>
+            <p className="text-stone-400 text-sm md:text-base max-w-2xl font-serif italic">Communicate the temple&apos;s divine glory by uploading sacred moments to the global community gallery.</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             
             {/* Upload Area */}
-            <div className="card-temple p-10 md:p-12 border-none shadow-golden-lg">
+            <div className="bg-stone-800 rounded-3xl p-8 md:p-12 border border-brass/25 shadow-golden relative">
               {status && (
-                <div className={`p-5 rounded-2xl mb-8 flex items-center gap-3 font-bold text-sm shadow-ivory border ${status.type === "success" ? "bg-green-50 text-green-700 border-green-100" : "bg-red-50 text-red-700 border-red-100"}`}>
-                  {status.type === "success" ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+                <div className={`p-5 rounded-2xl mb-8 flex items-center gap-3 font-mono font-semibold text-xs uppercase tracking-wider border ${status.type === "success" ? "bg-green-950/40 text-green-300 border-green-500/30" : "bg-red-950/40 text-red-300 border-red-500/30"}`}>
+                  {status.type === "success" ? <CheckCircle className="w-5 h-5 shrink-0 text-green-400" /> : <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />}
                   {status.msg}
                 </div>
               )}
 
               <form onSubmit={handleUploadSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">Media Title</label>
+                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold text-stone-300 mb-2">Media Title *</label>
                   <input 
                     type="text" 
                     required 
                     value={title} 
                     onChange={e => setTitle(e.target.value)}
                     placeholder="E.g., Pongal Morning 2026"
-                    className="input-temple"
+                    className="w-full px-4 py-3.5 bg-stone-900 border border-brass/30 rounded-xl focus:outline-none focus:border-brass-400 transition-all text-stone-100 placeholder-stone-500 text-sm md:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">Category Classification</label>
+                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold text-stone-300 mb-2">Category Classification *</label>
                   <select 
                     value={category} 
                     onChange={e => setCategory(e.target.value)}
-                    className="input-temple appearance-none bg-no-repeat bg-[right_1rem_center]"
+                    className="w-full px-4 py-3.5 bg-stone-900 border border-brass/30 rounded-xl focus:outline-none focus:border-brass-400 transition-all text-stone-100 text-sm md:text-base appearance-none"
                   >
-                    <option value="CEREMONY">Ceremony (Pooja/Homa)</option>
-                    <option value="EVENT">Event (Festivals)</option>
-                    <option value="OTHER">Other Highlights</option>
+                    <option value="CEREMONY" className="bg-stone-900 text-stone-100">Ceremony (Pooja/Homa)</option>
+                    <option value="EVENT" className="bg-stone-900 text-stone-100">Event (Festivals)</option>
+                    <option value="OTHER" className="bg-stone-900 text-stone-100">Other Highlights</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gold-dark mb-3 px-1">Drop Media Image</label>
-                  <div className="border-[3px] border-dashed border-gold/20 rounded-[32px] p-12 text-center bg-ivory-warm hover:bg-gold/5 transition-all cursor-pointer relative group/upload">
+                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold text-stone-300 mb-2">Drop Media Image *</label>
+                  <div className="border-2 border-dashed border-brass/30 rounded-2xl p-10 text-center bg-stone-900/50 hover:bg-stone-900 hover:border-brass-400 transition-all cursor-pointer relative group/upload">
                     <input 
                       type="file" 
                       accept="image/*" 
@@ -139,27 +141,27 @@ export default function AdminGalleryPage() {
                       required 
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                     />
-                    <div className="bg-ivory w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-5 border border-gold/20 shadow-ivory group-hover/upload:shadow-flame/10 transition-all">
-                      <Upload className="w-8 h-8 text-saffron" />
+                    <div className="bg-stone-950 w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-4 border border-brass/40 shadow-inner group-hover/upload:scale-105 transition-transform">
+                      <Upload className="w-7 h-7 text-brass-400" />
                     </div>
-                    <p className="font-serif font-bold text-gold-dark text-lg mb-1">Click or drag image to upload</p>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-sacred-ash/40">Supports strict JPG, PNG, WEBP (Max: 5MB)</p>
+                    <p className="font-serif font-semibold text-stone-200 text-base mb-1">Click or drag image to upload</p>
+                    <p className="text-xs font-mono uppercase tracking-wider text-stone-500">Supports strict JPG, PNG, WEBP (Max: 5MB)</p>
                   </div>
                 </div>
 
                 <button 
                   type="submit" 
                   disabled={isLoading || !file}
-                  className="btn-sacred w-full py-5 text-base flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed shadow-flame/20"
+                  className="btn-premium w-full py-4 text-xs font-mono font-semibold uppercase tracking-[0.15em] flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-stone-900/30 border-t-stone-900 rounded-full animate-spin" />
                       Publishing to Sanctuary...
                     </>
                   ) : (
                     <>
-                      <CheckCircle className="w-5 h-5" />
+                      <CheckCircle className="w-4 h-4" />
                       Publish to Community Gallery
                     </>
                   )}
@@ -168,27 +170,27 @@ export default function AdminGalleryPage() {
             </div>
 
             {/* Live Preview Side */}
-            <div>
+            <div className="bg-stone-800 rounded-3xl p-8 md:p-12 border border-brass/25 shadow-golden">
               <div className="mb-6 flex items-center justify-between">
-                <h3 className="text-xs font-black uppercase tracking-[0.3em] text-gold-dark">Live Render Preview</h3>
-                <div className="h-px flex-grow ml-5 bg-gold/10" />
+                <h3 className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-brass-300">Live Render Preview</h3>
+                <div className="h-px flex-grow ml-5 bg-brass/20" />
               </div>
-              <div className="aspect-[4/3] bg-ivory-warm rounded-[48px] border-[1px] border-gold/15 overflow-hidden flex items-center justify-center p-3 shadow-golden relative shadow-ivory">
+              <div className="aspect-[4/3] bg-stone-900/80 rounded-2xl border border-brass/20 overflow-hidden flex items-center justify-center p-3 shadow-inner relative">
                 {preview ? (
-                  <img src={preview} alt="Upload Request Preview" className="w-full h-full object-cover rounded-[36px] shadow-temple" />
+                  <img src={preview} alt="Upload Request Preview" className="w-full h-full object-cover rounded-xl shadow-golden" onError={(e) => { e.currentTarget.src = '/hero_premium.png'; e.currentTarget.onerror = null; }} />
                 ) : (
-                  <div className="text-center">
-                    <div className="bg-ivory w-20 h-20 rounded-full mx-auto flex items-center justify-center mb-5 border border-gold/15 opacity-50">
-                      <ImageIcon className="w-10 h-10 text-gold-dark/40" strokeWidth={1} />
+                  <div className="text-center p-6">
+                    <div className="bg-stone-950 w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-4 border border-brass/20 shadow-inner opacity-60">
+                      <ImageIcon className="w-8 h-8 text-stone-500" strokeWidth={1} />
                     </div>
-                    <p className="font-lora italic text-sacred-ash/40">Visualizing sacred boundaries</p>
+                    <p className="font-serif italic text-stone-500 text-sm">Preview will appear when file is selected</p>
                   </div>
                 )}
               </div>
               {preview && (
-                <div className="mt-8 p-6 bg-saffron/5 rounded-[24px] border border-saffron/20 text-saffron-dark text-xs flex items-center gap-4">
-                  <div className="w-2 h-2 rounded-full bg-saffron animate-pulse flex-shrink-0" />
-                  <p className="font-bold uppercase tracking-widest"><span className="opacity-60">File Identified:</span> {(file!.size / 1024 / 1024).toFixed(2)} MB • Automatic Cloudinary optimization active.</p>
+                <div className="mt-6 p-5 bg-stone-900/90 rounded-xl border border-brass/30 text-brass-300 text-xs font-mono flex items-center gap-3 shadow-inner">
+                  <div className="w-2 h-2 rounded-full bg-brass-400 animate-pulse shrink-0" />
+                  <p className="leading-relaxed"><span className="text-stone-400">File Identified:</span> {(file!.size / 1024 / 1024).toFixed(2)} MB • Cloudinary optimization active.</p>
                 </div>
               )}
             </div>
